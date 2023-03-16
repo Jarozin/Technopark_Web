@@ -1,0 +1,141 @@
+/* vampiro-one-regular - latin */
+@font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Vampiro One';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/vampiro-one-v18-latin-regular.eot'); /* IE9 Compat Modes */
+    src: url('../fonts/vampiro-one-v18-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('../fonts/vampiro-one-v18-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+         url('../fonts/vampiro-one-v18-latin-regular.woff') format('woff'), /* Modern Browsers */
+         url('../fonts/vampiro-one-v18-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('../fonts/vampiro-one-v18-latin-regular.svg#VampiroOne') format('svg'); /* Legacy iOS */
+}
+/* timmana-regular - latin */
+@font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Timmana';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/timmana-v12-latin-regular.eot'); /* IE9 Compat Modes */
+    src: url('../fonts/timmana-v12-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('../fonts/timmana-v12-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+         url('../fonts/timmana-v12-latin-regular.woff') format('woff'), /* Modern Browsers */
+         url('../fonts/timmana-v12-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('../fonts/timmana-v12-latin-regular.svg#Timmana') format('svg'); /* Legacy iOS */
+}
+
+/* antic-slab-regular - latin */
+@font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Antic Slab';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/antic-slab-v16-latin-regular.eot'); /* IE9 Compat Modes */
+    src: url('../fonts/antic-slab-v16-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('../fonts/antic-slab-v16-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+         url('../fonts/antic-slab-v16-latin-regular.woff') format('woff'), /* Modern Browsers */
+         url('../fonts/antic-slab-v16-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('../fonts/antic-slab-v16-latin-regular.svg#AnticSlab') format('svg'); /* Legacy iOS */
+}
+
+main > .container {
+    padding: 60px 15px 0;
+}
+
+body {
+    font-family: 'Antic Slab', sans-serif;
+    background-color: #363632;
+    color: #FDF6E3;
+}
+
+a {
+    color: #FFD600;
+}
+
+a:hover {
+    color: #caa900fd;
+}
+
+a:visited {
+    color: #8B4D4D;
+}
+
+.logo-container {
+    padding-left: 100px;
+}
+.logo {
+    font-family: "Vampiro one", sans-serif;
+    color: #B63939;
+    border: 2px;
+    border-radius: 50%;
+    font-size: 400%;
+}
+a.logo:visited, a.question-header:visited {
+    color: #B63939;
+}
+a.logo:hover {
+    color: #B63939;
+    background-color: #363632;
+}
+
+
+.search {
+    padding-left: 100px;
+}
+
+.search-bar {
+    width: 700px;
+}
+.question {
+    height: 200px;
+    border: 4px;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.question-avatar {
+    width: 130px;
+    height: 130px;
+}
+
+.question-avatar > img
+{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.question-text
+{
+    margin-bottom: 5%;
+}
+
+a.question-header:link {
+    text-decoration: none;
+}
+
+a.question-header:hover {
+    color: #B63939;
+}
+
+.header {
+    font-family: "Timmana", serif;
+    color: #B63939;
+    font-size: 40px;
+}
+
+.footer, .navbar, .question {
+    background-color: #262621;
+}
+
+.navbar {
+    height: 90px;
+}
+
+#hot-questions {
+    margin-left: 100px;
+    font-size: 25px;
+}
