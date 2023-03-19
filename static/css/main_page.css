@@ -319,5 +319,6 @@ main {
 .field-name {
     color: #FFD600;
     font-weight: bold;
-    font-size: larger;
+    font-size: 25px;
+    font-family: "Timmana", serif;
 }
