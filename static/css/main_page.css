@@ -288,13 +288,36 @@ main {
 
 .question-text-area {
     resize:vertical;
+    background-color: #262621;
+    color:#FDF6E3;
+    border: 0px;
     width: 90%;
 }
 
 .new-question {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 #content-area {
     height: 200px;
+}
+
+#ask-button {
+    font-weight: bold;
+    font-size:35px;
+    font-family: "Timmana", serif;
+    height: 60px;
+    width: 120px;
+    margin: auto;
+    padding: 0px;
+    display: block;
+    line-height: 75px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.field-name {
+    color: #FFD600;
+    font-weight: bold;
+    font-size: larger;
 }
