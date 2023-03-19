@@ -278,3 +278,8 @@ button.search-button:hover {
 #logout:hover, #settings:hover {
     background-color: #363632;
 }
+
+main {
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
