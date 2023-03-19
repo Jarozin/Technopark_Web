@@ -195,6 +195,12 @@ a.page-link {
     border: 0px;
 }
 
+button.search-button:hover {
+    color:#FDF6E3;
+    background-color: #7c2828;
+    border: 0px;
+}
+
 .pagination li a{
     color:#FFD600;
 }
