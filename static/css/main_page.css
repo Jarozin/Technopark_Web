@@ -50,16 +50,6 @@ body {
 }
 #footer {
     height: 180px;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-}
-#content-wrap {
-    padding-bottom: 180px; 
-}
-#page-container {
-    position: relative;
-    min-height: 100vh;
 }
 a {
     color: #FFD600;
