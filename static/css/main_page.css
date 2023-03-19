@@ -147,12 +147,11 @@ a.page-link {
 
 .like-field {  
     background-color: #363632; 
-    margin-left: 25%;
-    margin-top: 5%;
-    margin-bottom: 5%;
+    margin-left: 35px;
+    margin-top: 13px;
     border-radius: 10%;
     width: 60px;
-    height: auto;
+    height: 40px;
     display: flex;
     flex-direction: row;
 }
@@ -166,13 +165,18 @@ a.page-link {
 .like-buttons {
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 .like-buttons button {
-    height: 25px;
     width: auto;
     background-color: #B63939;
     border: 0px;
+    height: auto;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    box-sizing: border-box;
 }
 
 .best-members {
@@ -212,10 +216,9 @@ button.search-button:hover {
 
 
 .user-avatar {
-    height: 120px;
-    width: 120px;
-    padding: 10px;
-    margin-top: 30px;
+    height: 90px;
+    width: 90px;
+    padding: 5px;
 }
 .user-avatar .my-avatar {
     height: 100%;
@@ -228,31 +231,35 @@ button.search-button:hover {
     display: flex;
     flex-direction: row;
     background-color:#B63939;
-    border-radius: 5%;
-    height: 300px;
+    border-radius: 5px;
     width: 300px;
-    padding-top: 110px;
+    justify-content: space-around;
+    align-items: center;
 }
 
 #user-settings {
-    padding: 15px;
     display: flex;
     flex-direction: column;
+    height: 90px;
+    justify-content:center;
+    padding: 5px;
 }
 
 #user-settings div
 {
     font-weight: bold;
     font-size: large;
-    margin-top: 10px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 #user-settings div a{
     background-color: #262621;
-    padding: 5px;
-    border-radius: 10%;
-    margin-top: 10px;
+    border-radius: 5px;
+    padding: 3px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-top: 5px;
+    margin-right: 15px;
     text-align: center;
 }
 
