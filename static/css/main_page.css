@@ -184,7 +184,22 @@ a.page-link {
     margin-left: auto;
     margin-right: auto;
     width: 50%;
-    height: 200px;
+    height: 100px;
     width: auto;
     border-radius: 50%;
+}
+
+.search-button {
+    color:#FDF6E3;
+    background-color: #B63939;
+    border: 0px;
+}
+
+.pagination li a{
+    color:#FFD600;
+}
+
+.pagination li a:hover {
+    color:#FFD600;
+    background-color:#262621;
 }
