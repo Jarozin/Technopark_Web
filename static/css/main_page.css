@@ -267,3 +267,7 @@ button.search-button:hover {
 #logout:link, #settings:link {
     text-decoration: none;
 }
+
+#logout:hover, #settings:hover {
+    background-color: #363632;
+}
