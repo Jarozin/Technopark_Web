@@ -48,7 +48,19 @@ body {
     background-color: #363632;
     color: #FDF6E3;
 }
-
+#footer {
+    height: 180px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+#content-wrap {
+    padding-bottom: 180px; 
+}
+#page-container {
+    position: relative;
+    min-height: 100vh;
+}
 a {
     color: #FFD600;
 }
@@ -280,6 +292,19 @@ button.search-button:hover {
 }
 
 main {
-    margin-top: 40px;
+    margin-top: 60px;
     margin-bottom: 20px;
+}
+
+.question-text-area {
+    resize:vertical;
+    width: 90%;
+}
+
+.new-question {
+    margin-bottom: 20px;
+}
+
+#content-area {
+    height: 200px;
 }
