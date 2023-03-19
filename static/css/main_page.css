@@ -96,8 +96,9 @@ a.logo:hover {
 }
 
 .question-avatar {
-    width: 130px;
-    height: 130px;
+    width: 120px;
+    height: 120px;
+    margin-left: 5px;
 }
 
 .question-avatar > img
@@ -138,4 +139,52 @@ a.question-header:hover {
 #hot-questions {
     margin-left: 100px;
     font-size: 25px;
+}
+a.page-link {
+    background-color:#363632;
+    border: 0px;
+}
+
+.like-field {  
+    background-color: #363632; 
+    margin-left: 25%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border-radius: 10%;
+    width: 60px;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+}
+
+.like-counter {
+    float: left;
+    text-align: center;
+    margin: auto;
+}
+
+.like-buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+.like-buttons button {
+    height: 25px;
+    width: auto;
+    background-color: #B63939;
+    border: 0px;
+}
+
+.best-members {
+    margin-top: 100px;
+}
+
+.logo-bubble {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    height: 200px;
+    width: auto;
+    border-radius: 50%;
 }

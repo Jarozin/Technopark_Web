@@ -64,7 +64,7 @@
 
     
     <!-- Custom styles for this template -->
-    <link href="../static/css/my.css" rel="stylesheet">
+    <link href="../static/css/main_page.css" rel="stylesheet">
   </head>
   <body class="d-flex flex-column h-100">
     
@@ -99,7 +99,16 @@
                 <div class="row">
                     <div class="col-2">
                         <div class="question-avatar">
-                            <img src="../static/img/avatar1.png" alt="avatar">
+                            <img src="../static/img/avatar1.png" class="avatar-image" alt="avatar">
+                        </div>
+                        <div class="like-field">
+                          <div class="like-counter">
+                            0
+                          </div>
+                          <div class="like-buttons">
+                            <button class="add-like">+</button>
+                            <button class="sub-like">-</button>
+                          </div>
                         </div>
                     </div>
                     <div class="col-10">
@@ -122,6 +131,15 @@
                         <div class="question-avatar">
                             <img src="../static/img/avatar2.png" alt="avatar">
                         </div>
+                        <div class="like-field">
+                          <div class="like-counter">
+                            0
+                          </div>
+                          <div class="like-buttons">
+                            <button class="add-like">+</button>
+                            <button class="sub-like">-</button>
+                          </div>
+                        </div>
                     </div>
                     <div class="col-10">
                         <h2><a class="question-header header" href="#">This is the second question</a></h2>
@@ -143,6 +161,15 @@
                         <div class="question-avatar">
                             <img src="../static/img/avatar3.png" alt="avatar">
                         </div>
+                        <div class="like-field">
+                          <div class="like-counter">
+                            0
+                          </div>
+                          <div class="like-buttons">
+                            <button class="add-like">+</button>
+                            <button class="sub-like">-</button>
+                          </div>
+                        </div>
                     </div>
                     <div class="col-10">
                         <h2><a class="question-header header" href="#">This is the third question</a></h2>
@@ -159,7 +186,36 @@
                 </div>
             </div>
         </div>
-        <div class="col-3">left</div>
+        <div class="col-3">
+          <div class="popular-tags">
+            <div class="header">Popular tags</div>
+            <div class="tags">
+              <a href="#">Technopark</a>
+              <a href="#">Technopark</a>
+              <a href="#">Technopark</a>
+              <a href="#">Technopark</a>
+              <a href="#">Technopark</a>
+              <a href="#">Technopark</a>
+              <a href="#">Technopark</a>
+              <a href="#">Technopark</a>
+              <a href="#">Technopark</a>
+            </div>
+          </div>
+          <div class="best-members">
+            <div class="header">Best members</div>
+            <div class="tags">
+              <a href="#">Technopark</a>
+              <a href="#">Technopark</a>
+              <a href="#">Technopark</a>
+              <a href="#">Technopark</a>
+              <a href="#">Technopark</a>
+              <a href="#">Technopark</a>
+              <a href="#">Technopark</a>
+              <a href="#">Technopark</a>
+              <a href="#">Technopark</a>
+            </div>
+          </div>
+        </div>
     </div>
     <div>
         <nav aria-label="Page navigation example">
@@ -177,7 +233,9 @@
 
 <footer class="footer mt-auto py-3">
   <div class="container">
-    <span class="footer-text">Hey</span>
+    <div>
+      <img src="../static/img/logo_bubble.jpg" class="logo-bubble">
+    </div>
   </div>
 </footer>
 
