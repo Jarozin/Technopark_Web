@@ -410,3 +410,17 @@ input[type=checkbox] {
     padding: 0px;
     margin-bottom: 15px;
 }
+
+.no-user {
+    color:#FDF6E3;
+    margin-right: 35px;
+    font-size: 20px;
+}
+
+a.no-user:link {
+    color:#FDF6E3;
+}
+
+a.no-user:visited {
+    color:#FDF6E3;
+}
