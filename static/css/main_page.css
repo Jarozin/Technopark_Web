@@ -293,6 +293,7 @@ main {
     color:#FDF6E3;
     border: 0px;
     width: 90%;
+    border-radius: 5px;
 }
 
 .new-question {
@@ -346,8 +347,8 @@ main {
 
 .yellow-text {
     color:#FFD600;
-    font-weight: 40;
-    font-size: 30px;
+    font-weight: 30;
+    font-size: 25px;
     font-family: "Timmana", serif;
 }
 input[type=checkbox] {
@@ -385,6 +386,7 @@ input[type=checkbox] {
     border: 0px;
     border-radius: 5px;
     color: #FDF6E3;
+    height: 30px;
 }
 
 #login-button {
@@ -396,4 +398,10 @@ input[type=checkbox] {
     background-color: #262621;
     border-radius: 10px;
     padding: 20px;
+}
+
+#choose-button {
+    height: 30px;
+    border-radius: 5px;
+    margin-left: 5px;
 }
