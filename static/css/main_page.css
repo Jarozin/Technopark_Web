@@ -258,9 +258,9 @@ button.search-button:hover {
 #user-settings div a{
     background-color: #262621;
     border-radius: 5px;
-    padding: 3px;
-    padding-left: 5px;
-    padding-right: 5px;
+    padding: 4px;
+    padding-left: 10px;
+    padding-right: 10px;
     margin-top: 5px;
     margin-right: 15px;
     text-align: center;
@@ -348,7 +348,7 @@ main {
 .yellow-text {
     color:#FFD600;
     font-weight: 30;
-    font-size: 25px;
+    font-size: 20px;
     font-family: "Timmana", serif;
 }
 input[type=checkbox] {
@@ -398,12 +398,13 @@ input[type=checkbox] {
     background-color: #262621;
     border-radius: 10px;
     padding: 20px;
+    padding-top: 30px;
 }
 
 #choose-button {
     height: 30px;
     border-radius: 5px;
-    margin-left: 5px;
+    width: 100%;
 }
 
 #big-avatar {
@@ -423,4 +424,23 @@ a.no-user:link {
 
 a.no-user:visited {
     color:#FDF6E3;
+}
+
+.space-between-columns {
+    margin-right: 30px;
+}
+
+#settings-header {
+    margin-left: 8%;
+}
+
+#registration-header {
+    margin-left: 8%;
+}
+#login-header {
+    margin-left: 8%;
+}
+
+#create-new-account-link {
+    margin-top: 10px;
 }
