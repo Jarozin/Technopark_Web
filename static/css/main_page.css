@@ -381,7 +381,7 @@ input[type=checkbox] {
 }
 
 .login-field {
-    background-color: #262621;
+    background-color:#363632;
     border: 0px;
     border-radius: 5px;
     color: #FDF6E3;
@@ -390,4 +390,10 @@ input[type=checkbox] {
 #login-button {
     width: 100px;
     border-radius: 4px;
+}
+
+.content-column {
+    background-color: #262621;
+    border-radius: 10px;
+    padding: 20px;
 }
