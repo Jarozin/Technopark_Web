@@ -444,3 +444,12 @@ a.no-user:visited {
 #create-new-account-link {
     margin-top: 10px;
 }
+
+#choose-box {
+    padding: 0px;
+    padding-left: 5px;
+}
+
+#choose-row {
+    padding-right: 3px;
+}
