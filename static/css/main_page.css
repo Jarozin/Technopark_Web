@@ -368,6 +368,7 @@ input[type=checkbox] {
     width: 95%;
     border-radius: 10px;
     height: 200px;
+    margin-bottom: 30px;
 }
 
 .error-message {
