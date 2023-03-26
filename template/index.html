@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     <title>Sticky Footer Navbar Template · Bootstrap v5.2</title>
-    <link href="../static/css/bootstrap.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="../static/css/bootstrap.css" rel="stylesheet">
 
 <meta name="theme-color" content="#712cf9">
 
@@ -77,11 +77,13 @@
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <form class="d-flex search" role="search">
-          <input class="form-control search-bar me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success search-button" type="submit">Ask!</button>
-        </form>
+      <div id="navbar-container">
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <form class="d-flex search" role="search">
+            <input class="form-control search-bar me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success search-button" type="submit">Ask!</button>
+          </form>
+        </div>
       </div>
       <div class="user">
         <div class="user-avatar">

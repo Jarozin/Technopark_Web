@@ -454,3 +454,7 @@ a.no-user:visited {
 #choose-row {
     padding-right: 3px;
 }
+
+#navbar-container {
+    margin-right: 50px;
+}
