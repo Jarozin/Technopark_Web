@@ -1,124 +1,15 @@
 {% extends "inc/base.html" %}
 
 {% block content %}
-  <div class="row" id="main-question">
-  <div class="question expandable-question">
-      <div class="row">
-          <div class="col-2">
-              <div class="question-avatar">
-                  <img src="../static/img/avatar3.png" alt="avatar">
-              </div>
-            <div>
-              <div class="like-field">
-                <div class="like-counter">
-                  0
-                </div>
-                <div class="like-buttons">
-                  <button class="add-like">+</button>
-                  <button class="sub-like">-</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-10 question-text-field">
-              <h2><a class="question-header header" href="#"> {{ question.title }}</a></h2>
-              <div class="question-text"> {{ question.text }}</div>
-              <div class="row">
-                  <div class="col-8">
-                      <span class="tag">Tags:</span> <a href="#">black_jack</a>, <a href="#">bender</a>
-                  </div>
-              </div>
-          </div>
-      </div>   
-  </div>      
-  </div>
-  <div class="row">
-      <div class="header">Answers(2):</div>
-  </div>
-  <div class="row">
-      <div class="question expandable-question">
-          <div class="row">
-              <div class="col-2">
-                  <div class="question-avatar">
-                      <img src="../static/img/avatar1.png" alt="avatar">
-                  </div>
-                <div>
-                  <div class="like-field">
-                    <div class="like-counter">
-                      0
-                    </div>
-                    <div class="like-buttons">
-                      <button class="add-like">+</button>
-                      <button class="sub-like">-</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-10 question-text-field">
-                  <div class="question-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Pariatur accusamus quia asperiores sapiente? Temporibus ducimus excepturi veniam, Lorem ipsum, dolor sit amet consectetur adipisicing elit. Pariatur accusamus quia asperiores sapiente? Temporibus ducimus excepturi veniam, soluta ab facere, alias aperiam architecto ipsum recusandae esse repudiandae voluptates, qui deserunt. .Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate magnam quibusdam reprehenderit hic dolorem molestias inventore rem consequatur quas, similique animi officia quis ipsum voluptas unde autem, doloremque tenetur maxime. .Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio, quidem laborum delectus repudiandae expedita iure laboriosam aliquam maxime nulla illo similique saepe provident iusto dolorem quasi tempora sit, rem itaque. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus cum non mollitia minima sapiente voluptatum dolore aliquid. Nihil possimus id culpa voluptatibus veritatis, qui corporis debitis ad, labore adipisci quidem?soluta ab facere, alias aperiam architecto ipsum recusandae esse repudiandae voluptates, qui deserunt. .Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate magnam quibusdam reprehenderit hic dolorem molestias inventore rem consequatur quas, similique animi officia quis ipsum voluptas unde autem, doloremque tenetur maxime. .Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio, quidem laborum delectus repudiandae expedita iure laboriosam aliquam maxime nulla illo similique saepe provident iusto dolorem quasi tempora sit, rem itaque. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus cum non mollitia minima sapiente voluptatum dolore aliquid</div>
-                  <div class="row">
-                      <div class="col-8">
-                          <div>
-                              <input type="checkbox" class="answer" name="answer" checked>
-                              <span class="yellow-text">Correct answer</span>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>   
-      </div>      
-      </div>
-      <div class="row">
-          <div class="question expandable-question">
-              <div class="row">
-                  <div class="col-2">
-                      <div class="question-avatar">
-                          <img src="../static/img/avatar2.png" alt="avatar">
-                      </div>
-                    <div>
-                      <div class="like-field">
-                        <div class="like-counter">
-                          0
-                        </div>
-                        <div class="like-buttons">
-                          <button class="add-like">+</button>
-                          <button class="sub-like">-</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-10 question-text-field">
-                      <div class="question-text">Can't you google it yourself?</div>
-                      <div class="row">
-                          <div class="col-8">
-                              <div>
-                                  <input type="checkbox" class="answer" name="answer">
-                                  <span class="yellow-text">Correct answer</span>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>   
-          </div>      
-      </div>
-      <div>
-          <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-          </ul>
-        </div>
-      <div class="row">
-          <div class="header">Type what you think:</div>
-      </div>
-      <div class="row">
-          <textarea id="add-answer-text-area" placeholder="Type your answer here" class="question-text-area col-10"></textarea>
-      </div>
-      <div class="row">
-        <div class="col-4">
-        <button class="search-button" id="login-button">Answer</button>
-      </div>
-      </div>
+{% include "inc/main_question_item.html" %}
+
+<div class="row">
+  <div class="header">Answers({{ answer_amounts }}):</div>
+</div>
+
+{% for answer in answers %}
+  {% include "inc/answer_item.html" %}
+{% endfor %}
+{% include "inc/pagination_item.html" %}
+{% include "inc/your_answer_item.html" %}
 {% endblock content %}

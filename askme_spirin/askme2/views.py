@@ -12,5 +12,5 @@ def index(request):
 def question(request, question_id):
     if (question_id > len(models.QUESTIONS)):
         return HttpResponseNotFound("Error 404")
-    context = {'question': models.QUESTIONS[question_id]}
+    context = {'question': models.QUESTIONS[question_id], 'answers': models.ANSWERS, 'answer_amounts': len(models.ANSWERS)}
     return render(request, 'question.html', context)

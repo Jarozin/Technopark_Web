@@ -1,0 +1,32 @@
+{% load static %}
+<div class="row" id="main-question">
+    <div class="question expandable-question">
+        <div class="row">
+            <div class="col-2">
+                <div class="question-avatar">
+                    <img src="{% static " img/avatar2.png" %}" alt="avatar">
+                </div>
+                <div>
+                    <div class="like-field">
+                        <div class="like-counter">
+                            {{ question.likes }}
+                        </div>
+                        <div class="like-buttons">
+                            <button class="add-like">+</button>
+                            <button class="sub-like">-</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-10 question-text-field">
+                <h2><a class="question-header header" href="#"> {{ question.title }}</a></h2>
+                <div class="question-text"> {{ question.text }}</div>
+                <div class="row">
+                    <div class="col-8">
+                        <span class="tag">Tags:</span> <a href="#">black_jack</a>, <a href="#">bender</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

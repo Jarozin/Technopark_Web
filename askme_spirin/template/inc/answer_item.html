@@ -1,0 +1,34 @@
+{% load static %}
+<div class="row">
+    <div class="question expandable-question">
+        <div class="row">
+            <div class="col-2">
+                <div class="question-avatar">
+                    <img src="{% static "img/avatar2.png" %}" alt="avatar">
+                </div>
+              <div>
+                <div class="like-field">
+                  <div class="like-counter">
+                    {{ answer.likes }}
+                  </div>
+                  <div class="like-buttons">
+                    <button class="add-like">+</button>
+                    <button class="sub-like">-</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-10 question-text-field">
+                <div class="question-text">{{ answer.text }}</div>
+                <div class="row">
+                    <div class="col-8">
+                        <div>
+                            <input type="checkbox" class="answer" name="answer">
+                            <span class="yellow-text">Correct answer</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>   
+    </div>      
+</div>
