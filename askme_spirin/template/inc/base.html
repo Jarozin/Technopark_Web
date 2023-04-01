@@ -1,9 +1,10 @@
+{% load static %}
 <!doctype html>
 <html lang="en" class="h-100">
   <head>
     <meta charset="utf-8">
     <title>Sticky Footer Navbar Template · Bootstrap v5.2</title>
-    <link href="../static/css/bootstrap.css" rel="stylesheet">
+    <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
 
 <meta name="theme-color" content="#712cf9">
 
@@ -63,7 +64,7 @@
 
     
     <!-- Custom styles for this template -->
-    <link href="../static/css/main_page.css" rel="stylesheet">
+    <link href="{% static "css/main_page.css" %}" rel="stylesheet">
   </head>
   <body class="d-flex flex-column h-100">
 <header>
@@ -86,7 +87,7 @@
       </div>
       <div class="user">
         <div class="user-avatar">
-          <img class="my-avatar"  src="../static/img/my_avatar.jpg">
+          <img class="my-avatar"  src="{% static "img/my_avatar.jpg" %}">
         </div>
         <div id="user-settings">
           <div class="user-name">Saul Goodman</div>
@@ -103,7 +104,9 @@
 <main class="flex-shrink-0">
     <div class="container">
       <div class="row">
-          <div class="col-9"></div>
+          <div class="col-9">
+            {% block content %}{% endblock content %}
+          </div>
           <div class="col-3">
             <div class="popular-tags">
               <div class="header">Popular tags</div>
@@ -145,7 +148,7 @@
     
         <a href="#" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
           <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
-          <img src="../static/img/new_logo.png" class="logo-bubble">
+          <img src="{% static "/img/new_logo.png" %}" class="logo-bubble">
         </a>
     
         <ul class="nav col-md-4 justify-content-end">
