@@ -8,6 +8,11 @@ def index(request):
     context = {'questions': models.QUESTIONS}
     return render(request, 'index.html', context)
 
+def login(request):
+    return render(request, 'login.html')
+
+def signup(request):
+    return render(request, 'signup.html')
 
 def question(request, question_id):
     if (question_id > len(models.QUESTIONS)):

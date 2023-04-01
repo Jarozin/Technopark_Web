@@ -1,6 +1,7 @@
 {% extends "inc/base.html" %}
 
 {% block content %}
+<div class="col-9">
 {% include "inc/main_question_item.html" %}
 
 <div class="row">
@@ -12,4 +13,5 @@
 {% endfor %}
 {% include "inc/pagination_item.html" %}
 {% include "inc/your_answer_item.html" %}
+</div>
 {% endblock content %}
