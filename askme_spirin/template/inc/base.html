@@ -81,9 +81,7 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <form class="d-flex search" role="search">
             <input class="form-control search-bar me-2" type="search" placeholder="Search" aria-label="Search">
-            <!-- TODO: эта кнопка должна вести в аск-->
-            <button class="btn btn-outline-success search-button">Ask!</button>
-            </a>
+            <button class="btn btn-outline-success search-button"><a href="{% url "ask" %}" id="ask-link">Ask!</a></button>
           </form>
         </div>
       </div>

@@ -466,3 +466,11 @@ a.no-user:visited {
 .pagination li a {
     font-size: larger;
 }
+
+#ask-link {
+    color:#FBEECD;
+}
+a#ask-link:link, a#ask-link:hover, a#ask-link:visited {
+    text-decoration: none;
+    color:#FBEECD;
+}
