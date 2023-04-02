@@ -100,29 +100,17 @@
             <div class="popular-tags">
               <div class="header">Popular tags</div>
               <div class="tags">
-                <a href="#">Technopark</a>
-                <a href="#">Technopark</a>
-                <a href="#">Technopark</a>
-                <a href="#">Technopark</a>
-                <a href="#">Technopark</a>
-                <a href="#">Technopark</a>
-                <a href="#">Technopark</a>
-                <a href="#">Technopark</a>
-                <a href="#">Technopark</a>
+                {% for tag in tags %}
+                  <a href="{% url "tag" tag.name %}">{{ tag.name }}</a>
+                {% endfor %}
               </div>
             </div>
             <div class="best-members">
               <div class="header">Best members</div>
               <div class="tags">
-                <a href="#">Technopark</a>
-                <a href="#">Technopark</a>
-                <a href="#">Technopark</a>
-                <a href="#">Technopark</a>
-                <a href="#">Technopark</a>
-                <a href="#">Technopark</a>
-                <a href="#">Technopark</a>
-                <a href="#">Technopark</a>
-                <a href="#">Technopark</a>
+                {% for member in members %}
+                  <a href="#">{{ member.name }}</a>
+                {% endfor %}
               </div>
             </div>
           </div>

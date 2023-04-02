@@ -25,7 +25,12 @@
                     Answers (3)
                 </a>
                 <div class="col-8">
-                    Tags: <a href="#">black_jack</a>, <a href="#">bender</a>
+                    Tags: 
+                    {% for tag in question.tags %}
+                    <span>
+                      <a href="{% url "tag" tag.name %}">{{ tag.name }}</a> 
+                    </span>
+                    {% endfor %}
                 </div>
             </div>
         </div>

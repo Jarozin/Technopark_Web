@@ -5,29 +5,42 @@ from django.http import HttpResponseNotFound
 
 
 def index(request):
-    context = {'questions': models.QUESTIONS}
+    context = {'questions': models.QUESTIONS, 'tags': models.TAGS, 'members': models.MEMBERS}
     return render(request, 'index.html', context)
 
 
 def login(request):
-    return render(request, 'login.html')
+    context = {'tags': models.TAGS, 'members': models.MEMBERS}
+    return render(request, 'login.html', context)
 
 
 def ask(request):
-    return render(request, 'ask.html')
+    context = {'tags': models.TAGS, 'members': models.MEMBERS}
+    return render(request, 'ask.html', context)
 
 
 def signup(request):
-    return render(request, 'signup.html')
+    context = {'tags': models.TAGS, 'members': models.MEMBERS}
+    return render(request, 'signup.html', context)
 
 
 def settings(request):
-    return render(request, 'settings.html')
+    context = {'tags': models.TAGS, 'members': models.MEMBERS}
+    return render(request, 'settings.html', context)
 
 
 def question(request, question_id):
     if (question_id > len(models.QUESTIONS)):
         return HttpResponseNotFound("Error 404")
     context = {'question': models.QUESTIONS[question_id],
-               'answers': models.ANSWERS, 'answer_amounts': len(models.ANSWERS)}
+               'answers': models.ANSWERS, 'answer_amounts': len(models.ANSWERS),
+               'tags': models.TAGS, 'members': models.MEMBERS}
     return render(request, 'question.html', context)
+
+def tag(request, tag_name):
+    for tag in models.TAGS:
+        if tag['name'] == tag_name:
+            context = {'tag': tag, 'questions': models.QUESTIONS, 'members': models.MEMBERS, 'tags': models.TAGS}
+            return render(request, 'tag.html', context)
+    return HttpResponseNotFound("Error 404")
+    

@@ -27,7 +27,12 @@
                 <div class="question-text"> {{ question.text }}</div>
                 <div class="row">
                     <div class="col-8">
-                        <span class="tag">Tags:</span> <a href="#">black_jack</a>, <a href="#">bender</a>
+                        <span class="tag">Tags:                    
+                          {% for tag in tags %}
+                          <span>
+                            <a href="{% url "tag" tag.name %}">{{ tag.name }}</a> 
+                          </span>
+                          {% endfor %}
                     </div>
                 </div>
             </div>
