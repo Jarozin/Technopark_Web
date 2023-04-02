@@ -5,10 +5,15 @@ from django.core.paginator import Paginator
 # Create your views here.
 
 
-def index(request):
-    p = Paginator(models.QUESTIONS, 3)
+def paginate(object_list, request, per_page=3):
+    p = Paginator(object_list, per_page)
     page = request.GET.get('page')
-    questions = p.get_page(page)
+    object = p.get_page(page)
+    return object
+
+
+def index(request):
+    questions = paginate(models.QUESTIONS, request, 3)
     tags = set()
     for question in models.QUESTIONS:
         for tag in question['tags']:
@@ -19,9 +24,7 @@ def index(request):
 
 
 def hot(request):
-    p = Paginator(models.QUESTIONS, 3)
-    page = request.GET.get('page')
-    questions = p.get_page(page)
+    questions = paginate(models.QUESTIONS, request, 3)
     tags = set()
     for question in models.QUESTIONS:
         for tag in question['tags']:
@@ -74,9 +77,7 @@ def question(request, question_id):
     for question in models.QUESTIONS:
         for tag in question['tags']:
             tags.add(tag)
-    p = Paginator(models.ANSWERS, 3)
-    page = request.GET.get('page')
-    answers = p.get_page(page)
+    answers = paginate(models.ANSWERS, request, 3)
     context = {'question': models.QUESTIONS[question_id],
                'items': answers, 'answer_amounts': len(models.ANSWERS),
                'tags': tags, 'members': models.MEMBERS}
@@ -96,9 +97,7 @@ def tag(request, tag_name):
                     if tag == tag_name:
                         tagged_questions.append(question)
                         break
-            p = Paginator(tagged_questions, 3)
-            page = request.GET.get('page')
-            questions = p.get_page(page)
+            questions = paginate(tagged_questions, request, 3)
             context = {'tag': tag_name, 'items': questions,
                        'members': models.MEMBERS, 'tags': tags}
             return render(request, 'tag.html', context)
