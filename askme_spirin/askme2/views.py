@@ -5,8 +5,15 @@ from django.http import HttpResponseNotFound
 
 
 def index(request):
-    context = {'questions': models.QUESTIONS, 'tags': models.TAGS, 'members': models.MEMBERS}
+    context = {'questions': models.QUESTIONS,
+               'tags': models.TAGS, 'members': models.MEMBERS}
     return render(request, 'index.html', context)
+
+
+def hot(request):
+    context = {'questions': models.QUESTIONS,
+               'tags': models.TAGS, 'members': models.MEMBERS}
+    return render(request, 'hot.html', context)
 
 
 def login(request):
@@ -37,10 +44,11 @@ def question(request, question_id):
                'tags': models.TAGS, 'members': models.MEMBERS}
     return render(request, 'question.html', context)
 
+
 def tag(request, tag_name):
     for tag in models.TAGS:
         if tag['name'] == tag_name:
-            context = {'tag': tag, 'questions': models.QUESTIONS, 'members': models.MEMBERS, 'tags': models.TAGS}
+            context = {'tag': tag, 'questions': models.QUESTIONS,
+                       'members': models.MEMBERS, 'tags': models.TAGS}
             return render(request, 'tag.html', context)
     return HttpResponseNotFound("Error 404")
-    
