@@ -3,12 +3,13 @@
 {% block content %}
 <div class="row">
   <h1><span class="header">New questions</span>
-    <a href="#" id="hot-questions"> Hot questions</a></h1>
+    <a href="#" id="hot-questions"> Hot questions</a>
+  </h1>
 </div>
 <div class="col-9">
-{% for question in questions %}
-  {% include "inc/question_item.html" %}
-{% endfor %}
-{% include "inc/pagination_item.html" %}
+  {% for question in questions %}
+    {% include "inc/question_item.html" %}
+  {% endfor %}
+  {% include "inc/pagination_item.html" %}
 </div>
 {% endblock content %}
