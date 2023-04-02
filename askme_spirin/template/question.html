@@ -14,7 +14,7 @@
   <div class="header">Answers({{ answer_amounts }}):</div>
 </div>
 
-{% for answer in answers %}
+{% for answer in items %}
   {% include "inc/answer_item.html" %}
 {% endfor %}
 {% include "inc/pagination_item.html" %}

@@ -458,3 +458,11 @@ a.no-user:visited {
 #navbar-container {
     margin-right: 50px;
 }
+
+#current-page {
+    background-color: #B63939;
+}
+
+.pagination li a {
+    font-size: larger;
+}

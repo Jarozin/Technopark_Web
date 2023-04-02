@@ -4,13 +4,13 @@ ANSWERS = [
         'text': f'Text {i}',
         'correct answer': 0,
         'likes': i + 5,
-    }for i in range(3)
+    }for i in range(30)
 ]
 
 TAGS = [
     {
         'name': f'Tag_{i}',
-    }for i in range(5)
+    }for i in range(31)
 ]
 
 MEMBERS = [
@@ -25,5 +25,5 @@ QUESTIONS = [
         'text': f'Text {i}',
         'likes': i + 5,
         'tags': [TAGS[i], TAGS[i + 1]],
-    } for i in range(3)
+    } for i in range(30)
 ]
