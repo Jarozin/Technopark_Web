@@ -81,7 +81,9 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <form class="d-flex search" role="search">
             <input class="form-control search-bar me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success search-button" type="submit">Ask!</button>
+            <a href="{% url "login" %}">
+            <button class="btn btn-outline-success search-button">Ask!</button>
+            </a>
           </form>
         </div>
       </div>

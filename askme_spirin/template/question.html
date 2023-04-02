@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="col-10 question-text-field">
-                <h2><a class="question-header header" href="#"> {{ question.title }}</a></h2>
+                <h2><a class="question-header header" href="{% url "question" question.id %}"> {{ question.title }}</a></h2>
                 <div class="question-text"> {{ question.text }}</div>
                 <div class="row">
                     <div class="col-8">
