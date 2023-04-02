@@ -9,8 +9,12 @@ def index(request):
     p = Paginator(models.QUESTIONS, 3)
     page = request.GET.get('page')
     questions = p.get_page(page)
+    tags = set()
+    for question in models.QUESTIONS:
+        for tag in question['tags']:
+            tags.add(tag)
     context = {'items': questions,
-               'tags': models.TAGS, 'members': models.MEMBERS}
+               'tags': tags, 'members': models.MEMBERS}
     return render(request, 'index.html', context)
 
 
@@ -18,50 +22,84 @@ def hot(request):
     p = Paginator(models.QUESTIONS, 3)
     page = request.GET.get('page')
     questions = p.get_page(page)
+    tags = set()
+    for question in models.QUESTIONS:
+        for tag in question['tags']:
+            tags.add(tag)
     context = {'items': questions,
-               'tags': models.TAGS, 'members': models.MEMBERS}
+               'tags': tags, 'members': models.MEMBERS}
     return render(request, 'hot.html', context)
 
 
 def login(request):
-    context = {'tags': models.TAGS, 'members': models.MEMBERS}
+    tags = set()
+    for question in models.QUESTIONS:
+        for tag in question['tags']:
+            tags.add(tag)
+    context = {'tags': tags, 'members': models.MEMBERS}
     return render(request, 'login.html', context)
 
 
 def ask(request):
-    context = {'tags': models.TAGS, 'members': models.MEMBERS}
+    tags = set()
+    for question in models.QUESTIONS:
+        for tag in question['tags']:
+            tags.add(tag)
+    context = {'tags': tags, 'members': models.MEMBERS}
     return render(request, 'ask.html', context)
 
 
 def signup(request):
-    context = {'tags': models.TAGS, 'members': models.MEMBERS}
+    tags = set()
+    for question in models.QUESTIONS:
+        for tag in question['tags']:
+            tags.add(tag)
+    context = {'tags': tags, 'members': models.MEMBERS}
     return render(request, 'signup.html', context)
 
 
 def settings(request):
-    context = {'tags': models.TAGS, 'members': models.MEMBERS}
+    tags = set()
+    for question in models.QUESTIONS:
+        for tag in question['tags']:
+            tags.add(tag)
+    context = {'tags': tags, 'members': models.MEMBERS}
     return render(request, 'settings.html', context)
 
 
 def question(request, question_id):
     if (question_id > len(models.QUESTIONS)):
         return HttpResponseNotFound("Error 404")
+    tags = set()
+    for question in models.QUESTIONS:
+        for tag in question['tags']:
+            tags.add(tag)
     p = Paginator(models.ANSWERS, 3)
     page = request.GET.get('page')
     answers = p.get_page(page)
     context = {'question': models.QUESTIONS[question_id],
                'items': answers, 'answer_amounts': len(models.ANSWERS),
-               'tags': models.TAGS, 'members': models.MEMBERS}
+               'tags': tags, 'members': models.MEMBERS}
     return render(request, 'question.html', context)
 
 
 def tag(request, tag_name):
-    for tag in models.TAGS:
-        if tag['name'] == tag_name:
-            p = Paginator(models.QUESTIONS, 3)
+    tags = set()
+    for question in models.QUESTIONS:
+        for tag in question['tags']:
+            tags.add(tag)
+    for tag in tags:
+        if tag == tag_name:
+            tagged_questions = list()
+            for question in models.QUESTIONS:
+                for tag in question['tags']:
+                    if tag == tag_name:
+                        tagged_questions.append(question)
+                        break
+            p = Paginator(tagged_questions, 3)
             page = request.GET.get('page')
             questions = p.get_page(page)
-            context = {'tag': tag, 'items': questions,
-                       'members': models.MEMBERS, 'tags': models.TAGS}
+            context = {'tag': tag_name, 'items': questions,
+                       'members': models.MEMBERS, 'tags': tags}
             return render(request, 'tag.html', context)
     return HttpResponseNotFound("Error 404")

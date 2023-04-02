@@ -27,7 +27,7 @@
               Tags: 
               {% for tag in question.tags %}
               <span>
-                <a href="{% url "tag" tag.name %}">{{ tag.name }}</a> 
+                <a href="{% url "tag" tag %}">{{ tag }}</a> 
               </span>
               {% endfor %}
           </div>

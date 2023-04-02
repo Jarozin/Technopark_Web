@@ -99,7 +99,7 @@
               <div class="header">Popular tags</div>
               <div class="tags">
                 {% for tag in tags %}
-                  <a href="{% url "tag" tag.name %}">{{ tag.name }}</a>
+                  <a href="{% url "tag" tag %}">{{ tag }}</a>
                 {% endfor %}
               </div>
             </div>

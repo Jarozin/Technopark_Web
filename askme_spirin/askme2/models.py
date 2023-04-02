@@ -7,12 +7,6 @@ ANSWERS = [
     }for i in range(30)
 ]
 
-TAGS = [
-    {
-        'name': f'Tag_{i}',
-    }for i in range(31)
-]
-
 MEMBERS = [
     {
         'name': f'Name_{i}',
@@ -24,6 +18,6 @@ QUESTIONS = [
         'title': f'Question {i}',
         'text': f'Text {i}',
         'likes': i + 5,
-        'tags': [TAGS[i], TAGS[i + 1]],
+        'tags': [f'Tag_{i}', f'Tag_{i+1}'],
     } for i in range(30)
 ]
