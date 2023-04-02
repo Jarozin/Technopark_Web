@@ -6,6 +6,8 @@ from django.core.paginator import Paginator
 
 
 def paginate(object_list, request, per_page=3):
+    if (per_page < 0):
+        per_page = 3
     p = Paginator(object_list, per_page)
     page = request.GET.get('page')
     object = p.get_page(page)
