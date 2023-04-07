@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class Askme2Config(AppConfig):
+class AskmeAPPConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'askme2'
+    name = 'askmeapp'
