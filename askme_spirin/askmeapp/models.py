@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 
 ANSWERS = [
     {
@@ -28,7 +28,7 @@ QUESTIONS = [
 
 class Like(models.Model):
     state = models.BooleanField()
-    user = models.ForeignKey('User', on_delete=models.SET_DEFAULT)
+    user = models.ForeignKey('AskmeUser', on_delete=models.CASCADE)
 
 
 class Tag(models.Model):
@@ -38,18 +38,17 @@ class Tag(models.Model):
 class Question(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
-    user = models.ForeignKey('User', on_delete=models.SET_DEFAULT)
+    user = models.ForeignKey('AskmeUser', on_delete=models.CASCADE)
     like = models.ForeignKey('Like', on_delete=models.PROTECT)
     tag = models.ManyToManyField('Tag')
 
 
-class User(models.Model):
-    name = models.CharField(max_length=255)
-
+class AskmeUser(models.Model):
+    profile = models.OneToOneField(User, on_delete=models.PROTECT)
 
 class Answer(models.Model):
     content = models.TextField()
     correct = models.BooleanField(default=False)
     question = models.ForeignKey('Question', on_delete=models.CASCADE)
-    user = models.ForeignKey('User', on_delete=models.SET_DEFAULT)
+    user = models.ForeignKey('AskmeUser', on_delete=models.CASCADE)
     like = models.ForeignKey('Like', on_delete=models.PROTECT)
