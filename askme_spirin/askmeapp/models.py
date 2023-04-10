@@ -29,11 +29,13 @@ QUESTIONS = [
 class Like(models.Model):
     state = models.BooleanField()
     user = models.ForeignKey('AskmeUser', on_delete=models.CASCADE)
-
+    def __str__(self):
+        return self.state
 
 class Tag(models.Model):
     name = models.CharField(max_length=255)
-
+    def __str__(self):
+        return self.name
 
 class Question(models.Model):
     title = models.CharField(max_length=255)
@@ -41,10 +43,13 @@ class Question(models.Model):
     user = models.ForeignKey('AskmeUser', on_delete=models.CASCADE)
     like = models.ForeignKey('Like', on_delete=models.PROTECT)
     tag = models.ManyToManyField('Tag')
-
+    def __str__(self):
+        return self.title
 
 class AskmeUser(models.Model):
     profile = models.OneToOneField(User, on_delete=models.PROTECT)
+    def __str__(self):
+        return self.profile.get_username()
 
 class Answer(models.Model):
     content = models.TextField()
@@ -52,3 +57,5 @@ class Answer(models.Model):
     question = models.ForeignKey('Question', on_delete=models.CASCADE)
     user = models.ForeignKey('AskmeUser', on_delete=models.CASCADE)
     like = models.ForeignKey('Like', on_delete=models.PROTECT)
+    def __str__(self):
+        return self.content
