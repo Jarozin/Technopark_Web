@@ -54,12 +54,18 @@ class CommonContent(models.Model):
         return str(self.user)
 
 
+class QuestionManager(models.Manager):
+    pass
+
+
 class Question(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
     common_content = models.OneToOneField(
         'CommonContent', on_delete=models.CASCADE)
     tag = models.ManyToManyField('Tag')
+    creation_date = models.DateTimeField(auto_now_add=True)
+    objects = QuestionManager()
 
     def __str__(self):
         return self.title
@@ -67,7 +73,7 @@ class Question(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.PROTECT)
-    avatar = models.BinaryField()
+    avatar = models.ImageField(upload_to ='uploads/')
 
     def __str__(self):
         return self.user.get_username()
@@ -79,6 +85,7 @@ class Answer(models.Model):
     question = models.ForeignKey('Question', on_delete=models.CASCADE)
     common_content = models.OneToOneField(
         'CommonContent', on_delete=models.CASCADE)
+    creation_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.content[:40]

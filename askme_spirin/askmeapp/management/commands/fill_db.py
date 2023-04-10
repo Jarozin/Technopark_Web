@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
 from askmeapp import models
 from django.contrib.auth.models import User
+from django.contrib.staticfiles import finders
 
 class Command(BaseCommand):
     help = "Add objects to databse according to ratio"
@@ -13,9 +14,7 @@ class Command(BaseCommand):
         i = 0
         avatar_images = list()
         for i in range(3):
-            with open(f"/home/jarozin/Technopark/Web/dz/askme_spirin/static/img/avatar{i + 1}.png", "rb") as image:
-                f = image.read()
-                avatar_images.append(bytearray(f))
+            avatar_images.append(f"{finders.find('img')}/avatar{i + 1}.png")
         new_bulk = list()
         for i in range(ratio):
             new_tag = models.Tag(name = f"Tag_{i}")
