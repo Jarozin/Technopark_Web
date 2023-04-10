@@ -45,7 +45,7 @@ class Tag(models.Model):
 class CommonContent(models.Model):
     user = models.OneToOneField('Profile', on_delete=models.CASCADE)
     def __str__(self):
-        return str(user)
+        return str(self.user)
 
 class Question(models.Model):
     title = models.CharField(max_length=255)
