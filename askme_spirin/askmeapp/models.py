@@ -29,7 +29,7 @@ QUESTIONS = [
 class Like(models.Model):
     CommonContent = models.ForeignKey('CommonContent', on_delete=models.PROTECT, default=1)
     state = models.BooleanField()
-    user = models.ForeignKey('AskmeUser', on_delete=models.CASCADE)
+    user = models.ForeignKey('Profile', on_delete=models.CASCADE)
     def __str__(self):
         if (self.state):
             like_state = '+1'
@@ -43,7 +43,7 @@ class Tag(models.Model):
 
 
 class CommonContent(models.Model):
-    user = models.OneToOneField('AskmeUser', on_delete=models.CASCADE)
+    user = models.OneToOneField('Profile', on_delete=models.CASCADE)
     def __str__(self):
         return str(user)
 
@@ -56,10 +56,11 @@ class Question(models.Model):
     def __str__(self):
         return self.title
 
-class AskmeUser(models.Model):
-    profile = models.OneToOneField(User, on_delete=models.PROTECT)
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.PROTECT)
+    avatar = models.BinaryField()
     def __str__(self):
-        return self.profile.get_username()
+        return self.user.get_username()
 
 class Answer(models.Model):
     content = models.TextField()
