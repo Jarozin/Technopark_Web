@@ -27,20 +27,30 @@ QUESTIONS = [
 
 
 class Like(models.Model):
+    CommonContent = models.ForeignKey('CommonContent', on_delete=models.PROTECT, default=1)
     state = models.BooleanField()
     user = models.ForeignKey('AskmeUser', on_delete=models.CASCADE)
     def __str__(self):
-        return self.state
-
+        if (self.state):
+            like_state = '+1'
+        else:
+            like_state = '-1'
+        return str(self.user) + ': ' + like_state
 class Tag(models.Model):
     name = models.CharField(max_length=255)
     def __str__(self):
         return self.name
 
+
+class CommonContent(models.Model):
+    user = models.OneToOneField('AskmeUser', on_delete=models.CASCADE)
+    def __str__(self):
+        return str(user)
+
 class Question(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
-    user = models.ForeignKey('AskmeUser', on_delete=models.CASCADE)
+    common_content = models.OneToOneField('CommonContent', on_delete=models.CASCADE, default=1)
     like = models.ForeignKey('Like', on_delete=models.PROTECT)
     tag = models.ManyToManyField('Tag')
     def __str__(self):
@@ -55,7 +65,7 @@ class Answer(models.Model):
     content = models.TextField()
     correct = models.BooleanField(default=False)
     question = models.ForeignKey('Question', on_delete=models.CASCADE)
-    user = models.ForeignKey('AskmeUser', on_delete=models.CASCADE)
+    common_content = models.OneToOneField('CommonContent', on_delete=models.CASCADE, default=1)
     like = models.ForeignKey('Like', on_delete=models.PROTECT)
     def __str__(self):
-        return self.content
+        return self.content[:25]
