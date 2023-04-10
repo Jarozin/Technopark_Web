@@ -45,7 +45,7 @@ class Command(BaseCommand):
                 new_questions.append(new_question)
             models.Question.objects.bulk_create(new_questions)
             for j in range(10):
-                new_questions[j].tag.set([new_tag])
+                new_questions[j].tags.set([new_tag])
             new_answers = list()
             for j in range(100):
                 new_answer = models.Answer(content = f'content for answer number {j + i * 100}', correct = not bool(j % 100), question = new_questions[j % 10], common_content = new_content[10 + j])

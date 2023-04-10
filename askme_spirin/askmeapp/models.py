@@ -25,12 +25,20 @@ QUESTIONS = [
     } for i in range(30)
 ]
 
+class LikeManager(models.Manager):
+    def get_question_likes_total(question):
+        pass
+
+    def get_questions_likes_totals(questions):
+        pass
+
 
 class Like(models.Model):
     common_content = models.ForeignKey(
         'CommonContent', on_delete=models.PROTECT)
     state = models.BooleanField()
     user = models.ForeignKey('Profile', on_delete=models.CASCADE)
+    objects = LikeManager()
 
     def __str__(self):
         if (self.state):
@@ -39,9 +47,25 @@ class Like(models.Model):
             like_state = '-1'
         return str(self.user) + ': ' + like_state
 
+class TagManager(models.Manager):
+    def get_question_tags(question):
+        tags_pk = question.tag
+        tags = list()
+        for pk in tags_pk:
+            new_tag = Tag.objects.get(id=pk)
+            tags.append(new_tag)
+        return tags
+
+    def get_questions_tags(questions):
+        questions_tags = list()
+        for question in questions:
+            tags = TagManager.get_question_tags(question)
+            questions_tags.append(tags)
+        return tags
 
 class Tag(models.Model):
     name = models.CharField(max_length=255)
+    objects = TagManager()
 
     def __str__(self):
         return self.name
@@ -55,15 +79,15 @@ class CommonContent(models.Model):
 
 
 class QuestionManager(models.Manager):
-    pass
-
+    def get_tag(tag):
+        return Question.objects.filter(tag__contains=tag)
 
 class Question(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
     common_content = models.OneToOneField(
         'CommonContent', on_delete=models.CASCADE)
-    tag = models.ManyToManyField('Tag')
+    tags = models.ManyToManyField('Tag')
     creation_date = models.DateTimeField(auto_now_add=True)
     objects = QuestionManager()
 
