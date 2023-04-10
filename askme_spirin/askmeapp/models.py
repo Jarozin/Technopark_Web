@@ -48,20 +48,12 @@ class Like(models.Model):
         return str(self.user) + ': ' + like_state
 
 class TagManager(models.Manager):
-    def get_question_tags(question):
-        tags_pk = question.tag
-        tags = list()
-        for pk in tags_pk:
-            new_tag = Tag.objects.get(id=pk)
-            tags.append(new_tag)
-        return tags
-
-    def get_questions_tags(questions):
+    def get_questions_tags(self, questions):
         questions_tags = list()
         for question in questions:
-            tags = TagManager.get_question_tags(question)
+            tags = question.tags.all()
             questions_tags.append(tags)
-        return tags
+        return questions_tags
 
 class Tag(models.Model):
     name = models.CharField(max_length=255)

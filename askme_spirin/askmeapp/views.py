@@ -16,9 +16,7 @@ def paginate(object_list, request, per_page=3):
 
 def index(request):
     all_questions = models.Question.objects.all()
-    question_tags = list()
-    for question in all_questions:
-        question_tags.append(question.tags.all())
+    question_tags = models.Tag.objects.get_questions_tags(all_questions)
     all_questions = list(zip(all_questions, question_tags))
     questions = paginate(all_questions, request, 3)
     tags = models.Tag.objects.all()[:10]
