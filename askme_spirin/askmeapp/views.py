@@ -17,7 +17,8 @@ def paginate(object_list, request, per_page=3):
 def index(request):
     all_questions = models.Question.objects.all()
     question_tags = models.Tag.objects.get_questions_tags(all_questions)
-    all_questions = list(zip(all_questions, question_tags))
+    likes = models.Like.objects.get_question_likes_totals(all_questions)
+    all_questions = list(zip(all_questions, question_tags, likes))
     questions = paginate(all_questions, request, 3)
     tags = models.Tag.objects.all()[:10]
     users = models.User.objects.all()[:10]

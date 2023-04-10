@@ -26,11 +26,21 @@ QUESTIONS = [
 ]
 
 class LikeManager(models.Manager):
-    def get_question_likes_total(question):
-        pass
-
-    def get_questions_likes_totals(questions):
-        pass
+    def get_question_likes_total(self, question):
+        likes = question.common_content.like_set.all()
+        count = 0
+        for like in likes:
+            if like.state:
+                count += 1
+            else:
+                count -= 1
+        return count
+    def get_question_likes_totals(self, questions):
+        likes = list()
+        for question in questions:
+            count = self.get_question_likes_total(question)
+            likes.append(count)
+        return likes
 
 
 class Like(models.Model):
