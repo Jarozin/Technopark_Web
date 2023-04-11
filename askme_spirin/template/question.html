@@ -5,16 +5,18 @@
 <div class="col-9">
   <div class="row " id="main-question">
     <div class="question expandable-question">
-      {% include "inc/question_item.html" %}
+      {% with question=main_question.0 question_tags=main_question.1 likes=main_question.2 answer_count=main_question.3 %}
+        {% include "inc/question_item.html" %}
+      {% endwith %}
     </div>
 </div>
 
 
 <div class="row">
-  <div class="header">Answers({{ answer_amounts }}):</div>
+  <div class="header">Answers({{ answer_amount }}):</div>
 </div>
 
-{% for answer in items %}
+{% for answer,likes in items %}
   {% include "inc/answer_item.html" %}
 {% endfor %}
 {% include "inc/pagination_item.html" %}

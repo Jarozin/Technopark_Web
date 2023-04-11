@@ -65,16 +65,18 @@ def settings(request):
 
 
 def question(request, question_id):
-    if (question_id > len(models.QUESTIONS)):
-        return HttpResponseNotFound("Error 404")
-    tags = set()
-    for question in models.QUESTIONS:
-        for tag in question['tags']:
-            tags.add(tag)
-    answers = paginate(models.ANSWERS, request, 3)
-    context = {'question': models.QUESTIONS[question_id],
-               'items': answers, 'answer_amounts': len(models.ANSWERS),
-               'tags': tags, 'members': models.MEMBERS}
+    try:
+        question = models.Question.objects.get_by_id(question_id)
+    except:
+        return HttpResponseNotFound("Question doesnt exist")
+    tags = models.Tag.objects.all()[:10]
+    users = models.User.objects.all()[:10]
+    question_answers = models.Answer.objects.get_question_answers(question[0])
+    answers = paginate(question_answers, request, 3)
+    answer_amount = len(question_answers)
+    context = {'main_question': question,
+               'items': answers, 'answer_amount': answer_amount,
+               'tags': tags, 'members': users}
     return render(request, 'question.html', context)
 
 

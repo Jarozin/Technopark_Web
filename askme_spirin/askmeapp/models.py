@@ -86,7 +86,8 @@ class QuestionManager(models.Manager):
         all_questions = Question.objects.order_by('-creation_date')
         question_tags = Tag.objects.get_questions_tags(all_questions)
         likes = Like.objects.get_questions_likes_totals(all_questions)
-        answer_counts = Answer.objects.get_questions_answers(all_questions)
+        answer_counts = Answer.objects.get_questions_answers_counts(
+            all_questions)
         all_questions = list(
             zip(all_questions, question_tags, likes, answer_counts))
         return all_questions
@@ -96,7 +97,8 @@ class QuestionManager(models.Manager):
             1)), When(common_content__like__state=False, then=Value(-1)))), 0)).order_by('-sum', '-creation_date')
         question_tags = Tag.objects.get_questions_tags(all_questions)
         likes = Like.objects.get_questions_likes_totals(all_questions)
-        answer_counts = Answer.objects.get_questions_answers(all_questions)
+        answer_counts = Answer.objects.get_questions_answers_counts(
+            all_questions)
         all_questions = list(
             zip(all_questions, question_tags, likes, answer_counts))
         return all_questions
@@ -106,10 +108,21 @@ class QuestionManager(models.Manager):
             '-creation_date').filter(tags__name__iexact=tag_name)
         question_tags = Tag.objects.get_questions_tags(all_questions)
         likes = Like.objects.get_questions_likes_totals(all_questions)
-        answer_counts = Answer.objects.get_questions_answers(all_questions)
+        answer_counts = Answer.objects.get_questions_answers_counts(
+            all_questions)
         all_questions = list(
             zip(all_questions, question_tags, likes, answer_counts))
         return all_questions
+
+    def get_by_id(self, question_id):
+        question = Question.objects.get(id=question_id)
+        question_tags = question.tags.all()
+        likes = Like.objects.get_question_likes_total(question)
+        answer_count = Answer.objects.get_question_answers_count(
+            question)
+        question = [
+            question, question_tags, likes, answer_count]
+        return question
 
 
 class Question(models.Model):
@@ -134,15 +147,24 @@ class Profile(models.Model):
 
 
 class AnswerManager(models.Manager):
-    def get_question_answers(self, question):
+    def get_question_answers_count(self, question):
         answer_count = question.answer_set.all().count()
         return answer_count
 
-    def get_questions_answers(self, questions):
+    def get_questions_answers_counts(self, questions):
         answer_count_list = list()
         for question in questions:
-            answer_count_list.append(self.get_question_answers(question))
+            answer_count_list.append(self.get_question_answers_count(question))
         return answer_count_list
+
+    def get_question_answers(self, question):
+        #TODO: сделать сортировку ответов по правильности
+        all_answers = question.answer_set.annotate(sum=Coalesce(Sum(Case(When(common_content__like__state=True, then=Value(
+            1)), When(common_content__like__state=False, then=Value(-1)))), 0)).order_by('-sum', '-creation_date')
+        likes = Like.objects.get_questions_likes_totals(all_answers)
+        all_answers = list(
+            zip(all_answers, likes))
+        return all_answers
 
 
 class Answer(models.Model):
