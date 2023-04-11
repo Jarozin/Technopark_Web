@@ -3,31 +3,6 @@ from django.contrib.auth.models import User
 from django.db.models import Count, Case, When, Value, Sum, F
 from django.db.models.functions import Coalesce
 
-ANSWERS = [
-    {
-        'id': i,
-        'text': f'Text {i}',
-        'correct answer': 0,
-        'likes': i + 5,
-    }for i in range(30)
-]
-
-MEMBERS = [
-    {
-        'name': f'Name_{i}',
-    }for i in range(9)
-]
-QUESTIONS = [
-    {
-        'id': i,
-        'title': f'Question {i}',
-        'text': f'Text {i}',
-        'likes': i + 5,
-        'tags': [f'Tag_{i}', f'Tag_{i+1}'],
-    } for i in range(30)
-]
-
-
 class LikeManager(models.Manager):
     def get_question_likes_total(self, question):
         likes = question.common_content.like_set.aggregate(sum=Coalesce(
