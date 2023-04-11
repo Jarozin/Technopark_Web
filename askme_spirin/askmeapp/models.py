@@ -158,9 +158,8 @@ class AnswerManager(models.Manager):
         return answer_count_list
 
     def get_question_answers(self, question):
-        #TODO: сделать сортировку ответов по правильности
         all_answers = question.answer_set.annotate(sum=Coalesce(Sum(Case(When(common_content__like__state=True, then=Value(
-            1)), When(common_content__like__state=False, then=Value(-1)))), 0)).order_by('-sum', '-creation_date')
+            1)), When(common_content__like__state=False, then=Value(-1)))), 0)).order_by('-correct', '-sum', '-creation_date')
         likes = Like.objects.get_questions_likes_totals(all_answers)
         all_answers = list(
             zip(all_answers, likes))
