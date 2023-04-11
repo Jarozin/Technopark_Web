@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.db.models import Count, Case, When, Value, Sum
+from django.db.models.functions import Coalesce
 ANSWERS = [
     {
         'id': i,
@@ -28,9 +29,8 @@ QUESTIONS = [
 
 class LikeManager(models.Manager):
     def get_question_likes_total(self, question):
-        likes = question.common_content.like_set.filter(state=True).count()
-        dislikes = question.common_content.like_set.filter(state=False).count()
-        return likes - dislikes
+        likes = question.common_content.like_set.aggregate(sum=Coalesce(Sum(Case(When(state=True, then=Value(1)), When(state=False, then=Value(-1)))), 0))
+        return likes['sum']
 
     def get_questions_likes_totals(self, questions):
         likes = list()
@@ -90,6 +90,7 @@ class QuestionManager(models.Manager):
         return all_questions
 
     def get_hot(self):
+        ###TODO: здесь можно обойтись без сорта(скорее всего)
         all_questions = Question.objects.get_new()
         all_questions.sort(reverse=True, key=lambda question: question[2])
         return all_questions
