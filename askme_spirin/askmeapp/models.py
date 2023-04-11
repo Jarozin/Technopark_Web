@@ -94,6 +94,14 @@ class QuestionManager(models.Manager):
         all_questions.sort(reverse=True, key=lambda question: question[2])
         return all_questions
 
+    def get_by_tag(self, tag_name):
+        all_questions = Question.objects.order_by('-creation_date').filter(tags__name__iexact=tag_name)
+        question_tags = Tag.objects.get_questions_tags(all_questions)
+        likes = Like.objects.get_questions_likes_totals(all_questions)
+        answer_counts = Answer.objects.get_questions_answers(all_questions)
+        all_questions = list(
+        zip(all_questions, question_tags, likes, answer_counts))
+        return all_questions
 
 class Question(models.Model):
     title = models.CharField(max_length=255)

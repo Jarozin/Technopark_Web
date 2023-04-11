@@ -8,9 +8,9 @@
   </h1>
 </div>
 <div class="col-9">
-  {% for question in items %}
+  {% for question,question_tags,likes,answer_count in items %}
   <div class="question">
-  {% include "inc/question_item.html" %}
+    {% include "inc/question_item.html" %}
   </div>
   {% endfor %}
   {% include "inc/pagination_item.html" %}

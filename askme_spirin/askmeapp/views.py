@@ -79,20 +79,12 @@ def question(request, question_id):
 
 
 def tag(request, tag_name):
-    tags = set()
-    for question in models.QUESTIONS:
-        for tag in question['tags']:
-            tags.add(tag)
-    for tag in tags:
-        if tag == tag_name:
-            tagged_questions = list()
-            for question in models.QUESTIONS:
-                for tag in question['tags']:
-                    if tag == tag_name:
-                        tagged_questions.append(question)
-                        break
-            questions = paginate(tagged_questions, request, 3)
-            context = {'tag': tag_name, 'items': questions,
-                       'members': models.MEMBERS, 'tags': tags}
-            return render(request, 'tag.html', context)
-    return HttpResponseNotFound("Error 404")
+    tagged_questions = models.Question.objects.get_by_tag(tag_name)
+    if (len(tagged_questions) == 0):
+        return HttpResponseNotFound("No questions match the tag")
+    questions = paginate(tagged_questions, request, 3)
+    tags = models.Tag.objects.all()[:10]
+    users = models.User.objects.all()[:10]
+    context = {'tag': tag_name, 'items': questions,
+               'members': users, 'tags': tags}
+    return render(request, 'tag.html', context)
