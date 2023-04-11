@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models import Count, Case, When, Value, Sum
+from django.db.models import Count, Case, When, Value, Sum, F
 from django.db.models.functions import Coalesce
+
 ANSWERS = [
     {
         'id': i,
@@ -29,7 +30,8 @@ QUESTIONS = [
 
 class LikeManager(models.Manager):
     def get_question_likes_total(self, question):
-        likes = question.common_content.like_set.aggregate(sum=Coalesce(Sum(Case(When(state=True, then=Value(1)), When(state=False, then=Value(-1)))), 0))
+        likes = question.common_content.like_set.aggregate(sum=Coalesce(
+            Sum(Case(When(state=True, then=Value(1)), When(state=False, then=Value(-1)))), 0))
         return likes['sum']
 
     def get_questions_likes_totals(self, questions):
@@ -86,23 +88,29 @@ class QuestionManager(models.Manager):
         likes = Like.objects.get_questions_likes_totals(all_questions)
         answer_counts = Answer.objects.get_questions_answers(all_questions)
         all_questions = list(
-        zip(all_questions, question_tags, likes, answer_counts))
+            zip(all_questions, question_tags, likes, answer_counts))
         return all_questions
 
     def get_hot(self):
-        ###TODO: здесь можно обойтись без сорта(скорее всего)
-        all_questions = Question.objects.get_new()
-        all_questions.sort(reverse=True, key=lambda question: question[2])
-        return all_questions
-
-    def get_by_tag(self, tag_name):
-        all_questions = Question.objects.order_by('-creation_date').filter(tags__name__iexact=tag_name)
+        all_questions = Question.objects.annotate(sum=Coalesce(Sum(Case(When(common_content__like__state=True, then=Value(
+            1)), When(common_content__like__state=False, then=Value(-1)))), 0)).order_by('-sum', '-creation_date')
         question_tags = Tag.objects.get_questions_tags(all_questions)
         likes = Like.objects.get_questions_likes_totals(all_questions)
         answer_counts = Answer.objects.get_questions_answers(all_questions)
         all_questions = list(
-        zip(all_questions, question_tags, likes, answer_counts))
+            zip(all_questions, question_tags, likes, answer_counts))
         return all_questions
+
+    def get_by_tag(self, tag_name):
+        all_questions = Question.objects.order_by(
+            '-creation_date').filter(tags__name__iexact=tag_name)
+        question_tags = Tag.objects.get_questions_tags(all_questions)
+        likes = Like.objects.get_questions_likes_totals(all_questions)
+        answer_counts = Answer.objects.get_questions_answers(all_questions)
+        all_questions = list(
+            zip(all_questions, question_tags, likes, answer_counts))
+        return all_questions
+
 
 class Question(models.Model):
     title = models.CharField(max_length=255)
