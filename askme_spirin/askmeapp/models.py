@@ -25,17 +25,14 @@ QUESTIONS = [
     } for i in range(30)
 ]
 
+
 class LikeManager(models.Manager):
     def get_question_likes_total(self, question):
-        likes = question.common_content.like_set.all()
-        count = 0
-        for like in likes:
-            if like.state:
-                count += 1
-            else:
-                count -= 1
-        return count
-    def get_question_likes_totals(self, questions):
+        likes = question.common_content.like_set.filter(state=True).count()
+        dislikes = question.common_content.like_set.filter(state=False).count()
+        return likes - dislikes
+
+    def get_questions_likes_totals(self, questions):
         likes = list()
         for question in questions:
             count = self.get_question_likes_total(question)
@@ -57,6 +54,7 @@ class Like(models.Model):
             like_state = '-1'
         return str(self.user) + ': ' + like_state
 
+
 class TagManager(models.Manager):
     def get_questions_tags(self, questions):
         questions_tags = list()
@@ -64,6 +62,7 @@ class TagManager(models.Manager):
             tags = question.tags.all()
             questions_tags.append(tags)
         return questions_tags
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=255)
@@ -81,8 +80,20 @@ class CommonContent(models.Model):
 
 
 class QuestionManager(models.Manager):
-    def get_tag(tag):
-        return Question.objects.filter(tag__contains=tag)
+    def get_new(self):
+        all_questions = Question.objects.order_by('-creation_date')
+        question_tags = Tag.objects.get_questions_tags(all_questions)
+        likes = Like.objects.get_questions_likes_totals(all_questions)
+        answer_counts = Answer.objects.get_questions_answers(all_questions)
+        all_questions = list(
+        zip(all_questions, question_tags, likes, answer_counts))
+        return all_questions
+
+    def get_hot(self):
+        all_questions = Question.objects.get_new()
+        all_questions.sort(reverse=True, key=lambda question: question[2])
+        return all_questions
+
 
 class Question(models.Model):
     title = models.CharField(max_length=255)
@@ -99,10 +110,22 @@ class Question(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.PROTECT)
-    avatar = models.ImageField(upload_to ='uploads/')
+    avatar = models.ImageField(upload_to='uploads/')
 
     def __str__(self):
         return self.user.get_username()
+
+
+class AnswerManager(models.Manager):
+    def get_question_answers(self, question):
+        answer_count = question.answer_set.all().count()
+        return answer_count
+
+    def get_questions_answers(self, questions):
+        answer_count_list = list()
+        for question in questions:
+            answer_count_list.append(self.get_question_answers(question))
+        return answer_count_list
 
 
 class Answer(models.Model):
@@ -112,6 +135,7 @@ class Answer(models.Model):
     common_content = models.OneToOneField(
         'CommonContent', on_delete=models.CASCADE)
     creation_date = models.DateTimeField(auto_now_add=True)
+    objects = AnswerManager()
 
     def __str__(self):
         return self.content[:40]

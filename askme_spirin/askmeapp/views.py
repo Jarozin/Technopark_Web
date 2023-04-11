@@ -15,10 +15,7 @@ def paginate(object_list, request, per_page=3):
 
 
 def index(request):
-    all_questions = models.Question.objects.all()
-    question_tags = models.Tag.objects.get_questions_tags(all_questions)
-    likes = models.Like.objects.get_question_likes_totals(all_questions)
-    all_questions = list(zip(all_questions, question_tags, likes))
+    all_questions = models.Question.objects.get_new()
     questions = paginate(all_questions, request, 3)
     tags = models.Tag.objects.all()[:10]
     users = models.User.objects.all()[:10]
@@ -29,49 +26,41 @@ def index(request):
 
 
 def hot(request):
-    questions = paginate(models.QUESTIONS, request, 3)
-    tags = set()
-    for question in models.QUESTIONS:
-        for tag in question['tags']:
-            tags.add(tag)
+    hot_questions = models.Question.objects.get_hot()
+    questions = paginate(hot_questions, request, 3)
+    tags = models.Tag.objects.all()[:10]
+    users = models.User.objects.all()[:10]
+
     context = {'items': questions,
-               'tags': tags, 'members': models.MEMBERS}
+               'tags': tags, 'members': users}
     return render(request, 'hot.html', context)
 
 
 def login(request):
-    tags = set()
-    for question in models.QUESTIONS:
-        for tag in question['tags']:
-            tags.add(tag)
-    context = {'tags': tags, 'members': models.MEMBERS}
+    tags = models.Tag.objects.all()[:10]
+    users = models.User.objects.all()[:10]
+    context = {'tags': tags, 'members': users}
     return render(request, 'login.html', context)
 
 
 def ask(request):
-    tags = set()
-    for question in models.QUESTIONS:
-        for tag in question['tags']:
-            tags.add(tag)
-    context = {'tags': tags, 'members': models.MEMBERS}
+    tags = models.Tag.objects.all()[:10]
+    users = models.User.objects.all()[:10]
+    context = {'tags': tags, 'members': users}
     return render(request, 'ask.html', context)
 
 
 def signup(request):
-    tags = set()
-    for question in models.QUESTIONS:
-        for tag in question['tags']:
-            tags.add(tag)
-    context = {'tags': tags, 'members': models.MEMBERS}
+    tags = models.Tag.objects.all()[:10]
+    users = models.User.objects.all()[:10]
+    context = {'tags': tags, 'members': users}
     return render(request, 'signup.html', context)
 
 
 def settings(request):
-    tags = set()
-    for question in models.QUESTIONS:
-        for tag in question['tags']:
-            tags.add(tag)
-    context = {'tags': tags, 'members': models.MEMBERS}
+    tags = models.Tag.objects.all()[:10]
+    users = models.User.objects.all()[:10]
+    context = {'tags': tags, 'members': users}
     return render(request, 'settings.html', context)
 
 

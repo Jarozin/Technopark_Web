@@ -21,7 +21,7 @@
       <div class="question-text">{{ question.content }}</div>
       <div class="row">
           <a href="{% url "question" question.id %}" class="col-4">
-              Answers (3)
+              Answers ({{ answer_count }})
           </a>
           <div class="col-8">
               Tags:
