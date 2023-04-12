@@ -51,6 +51,7 @@ class Command(BaseCommand):
                 new_answers.append(new_answer)
             models.Answer.objects.bulk_create(new_answers)
 
+        #TODO: При распределении тэгов каждый тэг присвоить хотя бы один раз
         for i in range(1, ratio + 1):
             new_likes = list()
             seed(j * 101)

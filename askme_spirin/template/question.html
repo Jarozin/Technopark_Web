@@ -5,7 +5,7 @@
 <div class="col-9">
   <div class="row " id="main-question">
     <div class="question expandable-question">
-      {% with question=main_question.0 question_tags=main_question.1 likes=main_question.2 answer_count=main_question.3 %}
+      {% with question=main_question %}
         {% include "inc/question_item.html" %}
       {% endwith %}
     </div>
@@ -13,10 +13,10 @@
 
 
 <div class="row">
-  <div class="header">Answers({{ answer_amount }}):</div>
+  <div class="header">Answers({{ main_question.answer_set.count }}):</div>
 </div>
 
-{% for answer,likes in items %}
+{% for answer in items %}
   {% include "inc/answer_item.html" %}
 {% endfor %}
 {% include "inc/pagination_item.html" %}

@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from askmeapp import views
 
+#TODO: Разнести на app и проект(было в лекции)
 urlpatterns = [
     path('', views.index, name='index'),
     path('question/<int:question_id>/', views.question, name="question"),

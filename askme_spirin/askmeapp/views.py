@@ -71,11 +71,10 @@ def question(request, question_id):
         return HttpResponseNotFound("Question doesnt exist")
     tags = models.Tag.objects.all()[:10]
     users = models.User.objects.all()[:10]
-    question_answers = models.Answer.objects.get_question_answers(question[0])
+    question_answers = models.Answer.objects.get_question_answers(question)
     answers = paginate(question_answers, request, 3)
-    answer_amount = len(question_answers)
     context = {'main_question': question,
-               'items': answers, 'answer_amount': answer_amount,
+               'items': answers,
                'tags': tags, 'members': users}
     return render(request, 'question.html', context)
 

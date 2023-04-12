@@ -7,7 +7,7 @@
       <div>
       <div class="like-field">
         <div class="like-counter">
-          {{ likes }}
+          {{ question.likes }}
         </div>
         <div class="like-buttons">
           <button class="add-like">+</button>
@@ -21,13 +21,13 @@
       <div class="question-text">{{ question.content }}</div>
       <div class="row">
           <a href="{% url "question" question.id %}" class="col-4">
-              Answers ({{ answer_count }})
+              Answers ({{ question.answer_set.count }})
           </a>
           <div class="col-8">
               Tags:
-              {% for tag in question_tags %}
+              {% for tag in question.tags.all %}
               <span>
-                <a href="{% url "tag" tag %}">{{ tag }}</a>
+                <a href="{% url "tag" tag %}">{{ tag.name }}</a>
               </span>
               {% endfor %}
           </div>
