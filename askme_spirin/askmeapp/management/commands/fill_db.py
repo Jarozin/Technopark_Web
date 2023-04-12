@@ -44,6 +44,8 @@ class Command(BaseCommand):
                 question_tags = list()
                 for tag in tags:
                     question_tags.append(models.Tag.objects.get(id=tag))
+                if models.Tag.objects.get(id=i) not in question_tags:
+                    question_tags.append(models.Tag.objects.get(id=i))
                 new_questions[j].tags.set(question_tags)
             new_answers = list()
             for j in range(1, 101):
@@ -52,7 +54,6 @@ class Command(BaseCommand):
                 new_answers.append(new_answer)
             models.Answer.objects.bulk_create(new_answers)
 
-        # TODO: При распределении тэгов каждый тэг присвоить хотя бы один раз
         for i in range(1, ratio + 1):
             new_question_likes = list()
             seed(j * 101)
