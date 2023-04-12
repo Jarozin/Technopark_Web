@@ -4,11 +4,14 @@ from django.db.models import Count, Case, When, Value, Sum, F
 from django.db.models.functions import Coalesce
 
 class Like(models.Model):
-    #TODO: погуглить unique_together, сумму лайков можно как доп колонку в таблицу к вопросам/ответам забросить, сами лайки можно разделить на лайки для вопросов и ответов
+    #TODO: сумму лайков можно как доп колонку в таблицу к вопросам/ответам забросить, сами лайки можно разделить на лайки для вопросов и ответов
     common_content = models.ForeignKey(
         'CommonContent', on_delete=models.PROTECT)
     state = models.BooleanField()
     user = models.ForeignKey('Profile', on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together=['common_content','user']
 
     def __str__(self):
         if (self.state):
