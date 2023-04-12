@@ -15,7 +15,7 @@ class Command(BaseCommand):
         avatar_images = list()
         for i in range(3):
             avatar_images.append(f"{finders.find('img')}/avatar{i + 1}.png")
-        new_bulk = list()
+
         for i in range(1, ratio + 1):
             new_tag = models.Tag(name = f"Tag_{i}")
             models.Tag.objects.bulk_create([new_tag])
@@ -26,16 +26,10 @@ class Command(BaseCommand):
             new_profile = models.Profile(user = new_user, avatar=avatar_images[i % 3])
             models.Profile.objects.bulk_create([new_profile])
 
-            new_content = list()
-            for j in range(110):
-                new_common_content = models.CommonContent(user = new_profile)
-                new_content.append(new_common_content)
-            models.CommonContent.objects.bulk_create(new_content)
-
         for i in range(1, ratio + 1):
             new_questions = list()
             for j in range(1, 11):
-                new_question = models.Question(title=f'{(i - 1) * 10 + j} question title', content = f'this is a content for question number {(i - 1) * 10 + j}', common_content_id = (i - 1) * 110 + j)
+                new_question = models.Question(title=f'{(i - 1) * 10 + j} question title', content = f'this is a content for question number {(i - 1) * 10 + j}', user_id = ratio)
                 new_questions.append(new_question)
             models.Question.objects.bulk_create(new_questions)
             for j in range(10):
@@ -47,16 +41,24 @@ class Command(BaseCommand):
                 new_questions[j].tags.set(question_tags)
             new_answers = list()
             for j in range(1, 101):
-                new_answer = models.Answer(content = f'content for answer number {j + (i - 1) * 100}', correct = not bool(j % 100), question = new_questions[(j - 1) % 10], common_content_id = (i - 1) * 110 + j + 10)
+                new_answer = models.Answer(content = f'content for answer number {j + (i - 1) * 100}', correct = not bool(j % 100), question = new_questions[(j - 1) % 10],  user_id = ratio)
                 new_answers.append(new_answer)
             models.Answer.objects.bulk_create(new_answers)
 
         #TODO: При распределении тэгов каждый тэг присвоить хотя бы один раз
         for i in range(1, ratio + 1):
-            new_likes = list()
+            new_question_likes = list()
             seed(j * 101)
-            content_numbers = sample(range(1, ratio * 110), 200)
-            for j in range(200):
-                new_like = models.Like(user = models.Profile.objects.get(id=i), state=bool(j % 2), common_content_id = content_numbers[j])
-                new_likes.append(new_like)
-            models.Like.objects.bulk_create(new_likes)
+            question_ids = sample(range(1, ratio * 10), 18)
+            for j in range(18):
+                new_like = models.QuestionLike(user = models.Profile.objects.get(id=i), state=bool(j % 2), question_id = question_ids[j])
+                new_question_likes.append(new_like)
+            models.QuestionLike.objects.bulk_create(new_question_likes)
+
+            new_answer_likes = list()
+            seed(j * 101)
+            answer_ids = sample(range(1, ratio * 100), 182)
+            for j in range(182):
+                new_like = models.AnswerLike(user = models.Profile.objects.get(id=i), state=bool(j % 2), answer_id = answer_ids[j])
+                new_answer_likes.append(new_like)
+            models.AnswerLike.objects.bulk_create(new_answer_likes)
