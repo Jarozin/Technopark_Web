@@ -56,7 +56,7 @@ class Command(BaseCommand):
 
         for i in range(1, ratio + 1):
             new_question_likes = list()
-            seed(j * 101)
+            seed(i * 101)
             question_ids = sample(range(1, ratio * 10), 18)
             for j in range(18):
                 new_like = models.QuestionLike(user=models.Profile.objects.get(
@@ -65,7 +65,7 @@ class Command(BaseCommand):
             models.QuestionLike.objects.bulk_create(new_question_likes)
 
             new_answer_likes = list()
-            seed(j * 101)
+            seed((i + 1) * 2)
             answer_ids = sample(range(1, ratio * 100), 182)
             for j in range(182):
                 new_like = models.AnswerLike(user=models.Profile.objects.get(
