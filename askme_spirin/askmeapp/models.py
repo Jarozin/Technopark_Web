@@ -3,14 +3,15 @@ from django.contrib.auth.models import User
 from django.db.models import Count, Case, When, Value, Sum, F
 from django.db.models.functions import Coalesce
 
+
 class AnswerLike(models.Model):
-    #TODO: сумму лайков можно как доп колонку в таблицу к вопросам/ответам забросить, сами лайки можно разделить на лайки для вопросов и ответов
+    # TODO: сумму лайков можно как доп колонку в таблицу к вопросам/ответам забросить
     answer = models.ForeignKey('Answer', on_delete=models.CASCADE)
     state = models.BooleanField()
     user = models.ForeignKey('Profile', on_delete=models.CASCADE)
 
     class Meta:
-        unique_together=['answer','user']
+        unique_together = ['answer', 'user']
 
     def __str__(self):
         if (self.state):
@@ -19,13 +20,14 @@ class AnswerLike(models.Model):
             like_state = '-1'
         return str(self.user) + ': ' + like_state
 
+
 class QuestionLike(models.Model):
     question = models.ForeignKey('Question', on_delete=models.CASCADE)
     state = models.BooleanField()
     user = models.ForeignKey('Profile', on_delete=models.CASCADE)
 
     class Meta:
-        unique_together=['question','user']
+        unique_together = ['question', 'user']
 
     def __str__(self):
         if (self.state):
@@ -54,7 +56,7 @@ class QuestionManager(models.Manager):
     def get_by_tag(self, tag_name):
         return Question.objects.order_by(
             '-creation_date').filter(tags__name__iexact=tag_name).annotate(likes=Coalesce(Sum(Case(When(questionlike__state=True, then=Value(
-            1)), When(questionlike__state=False, then=Value(-1)))), 0))
+                1)), When(questionlike__state=False, then=Value(-1)))), 0))
 
     def get_by_id(self, question_id):
         return Question.objects.annotate(likes=Coalesce(Sum(Case(When(questionlike__state=True, then=Value(
