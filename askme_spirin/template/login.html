@@ -7,31 +7,34 @@
 <div class="col-1">
 </div>
 <div class="col-5">
-  <div class="row space-between-columns">
-    <div class="content-column">
-      <div class="row">
-        <div class="error-message">Sorry, wrong password!</div>
-      </div>
-      <div class="row login-row">
-        <div class="col-3 yellow-text">Login</div>
-        <input class="col-7 login-field">
-      </div>
-      <div class="row login-row">
-        <div class="col-3 yellow-text">Password</div>
-        <input class="col-7 login-field">
-      </div>
-      <div class="row login-row">
-        <div class="col-3"></div>
-        <div class="row col-6">
-          <div class="row login-row">
-            <button class="search-button" id="login-button">Log in!</button>
-            <a href="{% url "signup" %}" id="create-new-account-link" class="row">
-              create new account
-            </a>
+  <form action="/login/" method="post">
+    {% csrf_token %}
+    <div class="row space-between-columns">
+      <div class="content-column">
+        <div class="row">
+          <div class="error-message">Sorry, wrong password!</div>
+        </div>
+        <div class="row login-row">
+          <div class="col-3 yellow-text">Login</div>
+          <input type="text" name="username" class="col-7 login-field">
+        </div>
+        <div class="row login-row">
+          <div class="col-3 yellow-text">Password</div>
+          <input type="password" name="password" class="col-7 login-field">
+        </div>
+        <div class="row login-row">
+          <div class="col-3"></div>
+          <div class="row col-6">
+            <div class="row login-row">
+              <button class="search-button" id="login-button">Log in!</button>
+              <a href="{% url "signup" %}" id="create-new-account-link" class="row">
+                create new account
+              </a>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </form>
 </div>
 {% endblock content %}

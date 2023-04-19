@@ -1,4 +1,9 @@
-from django.shortcuts import render
+
+from django.shortcuts import redirect, render
+from django.contrib import auth
+from django.urls import reverse
+
+from askmeapp.forms import LoginForm
 from . import models
 from django.http import HttpResponseNotFound
 from django.core.paginator import Paginator
@@ -40,6 +45,13 @@ def login(request):
     tags = models.Tag.objects.all()[:10]
     users = models.User.objects.all()[:10]
     context = {'tags': tags, 'members': users}
+    print(request.POST)
+    login_form = LoginForm(request.POST)
+    if login_form.is_valid():
+        user = auth.authenticate(request=request, **login_form.cleaned_data)
+        if (user):
+            auth.login(request, user)
+            return redirect(reverse('index'))
     return render(request, 'login.html', context)
 
 
