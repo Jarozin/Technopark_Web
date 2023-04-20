@@ -12,21 +12,21 @@
     <div class="row space-between-columns">
       <div class="content-column">
         <div class="row">
-          <div class="error-message">Sorry, wrong password!</div>
+            <div class="error-message">{% if form.is_bound %} {{ form.errors }} {% endif %}</div>
         </div>
         <div class="row login-row">
-          <div class="col-3 yellow-text">Login</div>
-          <input type="text" name="username" class="col-7 login-field">
+          <label for="form.username.id_for_label" class="col-3 yellow-text">Login</label>
+          {{ form.username }}
         </div>
         <div class="row login-row">
-          <div class="col-3 yellow-text">Password</div>
-          <input type="password" name="password" class="col-7 login-field">
+          <div for="form.password.id_for_label" class="col-3 yellow-text">Password</div>
+          {{ form.password }}
         </div>
         <div class="row login-row">
           <div class="col-3"></div>
           <div class="row col-6">
             <div class="row login-row">
-              <button class="search-button" id="login-button">Log in!</button>
+              <button type="submit" class="search-button" id="login-button">Log in!</button>
               <a href="{% url "signup" %}" id="create-new-account-link" class="row">
                 create new account
               </a>

@@ -2,6 +2,7 @@
 from django.shortcuts import redirect, render
 from django.contrib import auth
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 from askmeapp.forms import LoginForm
 from . import models
@@ -44,17 +45,23 @@ def hot(request):
 def login(request):
     tags = models.Tag.objects.all()[:10]
     users = models.User.objects.all()[:10]
-    context = {'tags': tags, 'members': users}
-    print(request.POST)
-    login_form = LoginForm(request.POST)
-    if login_form.is_valid():
-        user = auth.authenticate(request=request, **login_form.cleaned_data)
-        if (user):
-            auth.login(request, user)
-            return redirect(reverse('index'))
+    if request.method == 'GET':
+        login_form = LoginForm()
+    elif request.method == 'POST':
+        login_form = LoginForm(request.POST)
+        if login_form.is_valid():
+            user = auth.authenticate(
+                request=request, **login_form.cleaned_data)
+            if (user):
+                auth.login(request, user)
+                return redirect(reverse('index'))
+            login_form.add_error(None, "Invalid username/password")
+        else:
+            login_form = LoginForm()
+    context = {'tags': tags, 'members': users, 'form': login_form}
     return render(request, 'login.html', context)
 
-
+@login_required
 def ask(request):
     tags = models.Tag.objects.all()[:10]
     users = models.User.objects.all()[:10]
@@ -69,6 +76,7 @@ def signup(request):
     return render(request, 'signup.html', context)
 
 
+@login_required
 def settings(request):
     tags = models.Tag.objects.all()[:10]
     users = models.User.objects.all()[:10]
