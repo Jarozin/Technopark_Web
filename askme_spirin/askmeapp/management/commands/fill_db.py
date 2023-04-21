@@ -22,9 +22,8 @@ class Command(BaseCommand):
             new_tag = models.Tag(name=f"Tag_{i}")
             models.Tag.objects.bulk_create([new_tag])
 
-            new_user = User(
-                username=f"User_{i}", email=f'user_{i}@mail.ru', password='asdqweqwe_123')
-            models.User.objects.bulk_create([new_user])
+            new_user = User.objects.create_user(
+                f"User_{i}", f'user_{i}@mail.ru', '1234')
 
             new_profile = models.Profile(
                 user=new_user, avatar=avatar_images[i % 3])

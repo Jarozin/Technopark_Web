@@ -11,17 +11,19 @@
     {% csrf_token %}
     <div class="row space-between-columns">
       <div class="content-column">
+        {% for field in form %}
         <div class="row">
-            <div class="error-message">{% if form.is_bound %} {{ form.errors }} {% endif %}</div>
+            <div class="error-message">{{ field.errors }}</div>
         </div>
+        {% endfor %}
+
+        {% for field in form %}
         <div class="row login-row">
-          <label for="form.username.id_for_label" class="col-3 yellow-text">Login</label>
-          {{ form.username }}
+          <label for="field.id_for_label" class="col-3 yellow-text">{{ field.label }}</label>
+          {{ field }}
         </div>
-        <div class="row login-row">
-          <div for="form.password.id_for_label" class="col-3 yellow-text">Password</div>
-          {{ form.password }}
-        </div>
+        {% endfor %}
+
         <div class="row login-row">
           <div class="col-3"></div>
           <div class="row col-6">
