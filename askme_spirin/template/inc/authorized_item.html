@@ -4,10 +4,10 @@
       <img class="my-avatar"  src="{% static "img/my_avatar.jpg" %}">
     </div>
     <div id="user-settings">
-      <div class="user-name">Saul Goodman</div>
+      <div class="user-name">{{ user.username }}</div>
       <div>
-        <a href="{% url "settings" %}" id="settings">settings</a>  
-        <a href="#" id="logout">lot out</a>
+        <a href="{% url "settings" %}" id="settings">settings</a>
+        <a href="{% url "logout" %}" id="logout">lot out</a>
       </div>
     </div>
   </div>

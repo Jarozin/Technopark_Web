@@ -56,10 +56,9 @@ def login(request):
                 auth.login(request, user)
                 return redirect(reverse('index'))
             login_form.add_error(None, "Invalid username/password")
-        else:
-            login_form = LoginForm()
     context = {'tags': tags, 'members': users, 'form': login_form}
     return render(request, 'login.html', context)
+
 
 @login_required
 def ask(request):
@@ -109,3 +108,9 @@ def tag(request, tag_name):
     context = {'tag': tag_name, 'items': questions,
                'members': users, 'tags': tags}
     return render(request, 'tag.html', context)
+
+
+@login_required
+def logout(request):
+    auth.logout(request)
+    return redirect(reverse('login'))

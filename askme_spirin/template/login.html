@@ -11,11 +11,9 @@
     {% csrf_token %}
     <div class="row space-between-columns">
       <div class="content-column">
-        {% for field in form %}
         <div class="row">
-            <div class="error-message">{{ field.errors }}</div>
+            <div class="error-message">{{ form.non_field_errors }}</div>
         </div>
-        {% endfor %}
 
         {% for field in form %}
         <div class="row login-row">

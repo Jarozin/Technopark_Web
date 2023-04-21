@@ -85,7 +85,11 @@
           </form>
         </div>
       </div>
-      {% include "inc/unauthorized_item.html" %}
+      {% if user.is_authenticated %}
+        {% include "inc/authorized_item.html" %}
+      {% else %}
+        {% include "inc/unauthorized_item.html" %}
+      {% endif %}
     </div>
   </nav>
 </header>
