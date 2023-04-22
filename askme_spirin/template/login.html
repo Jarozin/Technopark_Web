@@ -14,7 +14,7 @@
         <div class="row">
             <div class="error-message">{{ form.non_field_errors }}</div>
         </div>
-
+        <input type="hidden" name="next" value="{{ request.GET.next }}">
         {% for field in form %}
         <div class="row login-row">
           <label for="field.id_for_label" class="col-3 yellow-text">{{ field.label }}</label>

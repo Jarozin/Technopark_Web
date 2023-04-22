@@ -54,7 +54,10 @@ def login(request):
                 request=request, **login_form.cleaned_data)
             if (user):
                 auth.login(request, user)
-                return redirect(reverse('index'))
+                url = request.POST.get('next', False)
+                if not url:
+                    url = reverse('index')
+                return redirect(url)
             login_form.add_error(None, "Invalid username/password")
     context = {'tags': tags, 'members': users, 'form': login_form}
     return render(request, 'login.html', context)
