@@ -4,7 +4,7 @@ from django.contrib import auth
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
-from askmeapp.forms import LoginForm
+from askmeapp.forms import LoginForm, ProfileRegistrationForm, RegistrationForm
 from . import models
 from django.http import HttpResponseNotFound
 from django.core.paginator import Paginator
@@ -64,6 +64,7 @@ def login(request):
 def ask(request):
     tags = models.Tag.objects.all()[:10]
     users = models.User.objects.all()[:10]
+
     context = {'tags': tags, 'members': users}
     return render(request, 'ask.html', context)
 
@@ -71,7 +72,22 @@ def ask(request):
 def signup(request):
     tags = models.Tag.objects.all()[:10]
     users = models.User.objects.all()[:10]
-    context = {'tags': tags, 'members': users}
+    if request.method == 'GET':
+        registration_form = RegistrationForm()
+        profile_form = ProfileRegistrationForm()
+    elif request.method == 'POST':
+        registration_form = RegistrationForm(request.POST)
+        profile_form = ProfileRegistrationForm(request.POST)
+        if registration_form.is_valid() and profile_form.is_valid():
+            user = models.User.objects.create_user(
+            username=registration_form.cleaned_data['username'],
+            email=registration_form.cleaned_data['email'],
+            password=registration_form.cleaned_data['password'])
+            profile = models.Profile(user=user, avatar=profile_form.cleaned_data['avatar'])
+            profile.save()
+            auth.login(request, user)
+            redirect(reverse('index'))
+    context = {'tags': tags, 'members': users, 'form': registration_form, 'profile_form': profile_form}
     return render(request, 'signup.html', context)
 
 

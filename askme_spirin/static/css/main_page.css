@@ -196,13 +196,17 @@ a.page-link {
     border-radius: 50%;
 }
 
-.search-button {
+input::file-selector-button, .search-button {
     color:#FDF6E3;
     background-color: #B63939;
     border: 0px;
 }
 
-button.search-button:hover {
+#choose-file {
+    width: 100%;
+}
+
+input::file-selector-button:hover, button.search-button:hover {
     color:#FDF6E3;
     background-color: #7c2828;
     border: 0px;
@@ -403,7 +407,7 @@ input[type=checkbox] {
     padding-top: 30px;
 }
 
-#choose-button {
+input::file-selector-button, #choose-button {
     height: 30px;
     border-radius: 5px;
     width: 100%;
