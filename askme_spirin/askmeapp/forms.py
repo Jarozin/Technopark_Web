@@ -47,6 +47,6 @@ class ProfileRegistrationForm(forms.ModelForm):
     class Meta:
         model = models.Profile
         fields = ['avatar']
-        ##widgets = {
-        #    'avatar': forms.FileInput(label='Upload avatar', attrs={'class' : "col-4 login-field"})
-        #}
+        widgets = {
+            'avatar': forms.ImageField()
+        }

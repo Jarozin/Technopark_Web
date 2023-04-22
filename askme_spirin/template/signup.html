@@ -7,7 +7,7 @@
 <div class="col-1">
 </div>
 <div class="col-5">
-  <form action="/signup/" method="post">
+  <form action="/signup/" enctype="multipart/form-data" method="post">
   {% csrf_token %}
     <div class="row space-between-columns">
       <div class="content-column">
@@ -22,6 +22,7 @@
         {% endfor %}
         <div class="row login-row">
           <label for="choose-file" class="col-3 yellow-text">Upload avatar</label>
+          <!--TODO: поле и кнопку для выбора файла связать с помощью js-->
           <input class="col-4 login-field">
           <div class="col-3">
             <input type="file" accept="image/png, image/jpeg" id="choose-file" value="Choose">

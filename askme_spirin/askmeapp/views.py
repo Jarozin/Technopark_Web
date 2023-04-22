@@ -76,6 +76,7 @@ def signup(request):
         registration_form = RegistrationForm()
         profile_form = ProfileRegistrationForm()
     elif request.method == 'POST':
+        print(request.FILES)
         registration_form = RegistrationForm(request.POST)
         profile_form = ProfileRegistrationForm(request.POST)
         if registration_form.is_valid() and profile_form.is_valid():
