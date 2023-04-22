@@ -42,6 +42,12 @@ class RegistrationForm(forms.ModelForm):
             raise ValidationError('Email already taken')
         raise ValidationError('Username already taken')
 
+    def save(self):
+        return models.User.objects.create_user(
+            username=self.cleaned_data['username'],
+            email=self.cleaned_data['email'],
+            password=self.cleaned_data['password'])
+
 
 class ProfileRegistrationForm(forms.ModelForm):
     class Meta:

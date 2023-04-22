@@ -79,10 +79,7 @@ def signup(request):
         registration_form = RegistrationForm(request.POST)
         profile_form = ProfileRegistrationForm(request.POST, request.FILES)
         if registration_form.is_valid() and profile_form.is_valid():
-            user = models.User.objects.create_user(
-            username=registration_form.cleaned_data['username'],
-            email=registration_form.cleaned_data['email'],
-            password=registration_form.cleaned_data['password'])
+            user = registration_form.save()
             profile = models.Profile(user=user, avatar=profile_form.cleaned_data['avatar'])
             profile.save()
             auth.login(request, user)
