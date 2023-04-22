@@ -12,7 +12,7 @@
     <div class="row space-between-columns">
       <div class="content-column">
         <div class="row">
-          <div class="error-message">{{ form.non_field_errors }}</div>
+          <div class="error-message">{{ form.errors }} {{ profile_form.errors }}</div>
         </div>
         {% for field in form %}
         <div class="row login-row">
@@ -20,14 +20,16 @@
           {{ field }}
         </div>
         {% endfor %}
+        {% for field in profile_form %}
         <div class="row login-row">
-          <label for="choose-file" class="col-3 yellow-text">Upload avatar</label>
+          <label class="col-3 yellow-text">{{ field.label }}</label>
           <!--TODO: поле и кнопку для выбора файла связать с помощью js-->
           <input class="col-4 login-field">
           <div class="col-3">
-            <input type="file" accept="image/png, image/jpeg" id="choose-file" value="Choose">
+            {{ field }}
           </div>
         </div>
+        {% endfor %}
         <div class="row login-row">
           <div class="col-3"></div>
           <div class="row col-4">

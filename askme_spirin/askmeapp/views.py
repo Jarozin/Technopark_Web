@@ -76,9 +76,8 @@ def signup(request):
         registration_form = RegistrationForm()
         profile_form = ProfileRegistrationForm()
     elif request.method == 'POST':
-        print(request.FILES)
         registration_form = RegistrationForm(request.POST)
-        profile_form = ProfileRegistrationForm(request.POST)
+        profile_form = ProfileRegistrationForm(request.POST, request.FILES)
         if registration_form.is_valid() and profile_form.is_valid():
             user = models.User.objects.create_user(
             username=registration_form.cleaned_data['username'],

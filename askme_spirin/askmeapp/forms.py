@@ -48,5 +48,5 @@ class ProfileRegistrationForm(forms.ModelForm):
         model = models.Profile
         fields = ['avatar']
         widgets = {
-            'avatar': forms.ImageField()
+            'avatar': forms.ClearableFileInput(attrs={'id': 'choose-file'})
         }
