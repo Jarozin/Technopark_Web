@@ -86,7 +86,7 @@ def signup(request):
             profile = models.Profile(user=user, avatar=profile_form.cleaned_data['avatar'])
             profile.save()
             auth.login(request, user)
-            redirect(reverse('index'))
+            return redirect(reverse('index'))
     context = {'tags': tags, 'members': users, 'form': registration_form, 'profile_form': profile_form}
     return render(request, 'signup.html', context)
 
