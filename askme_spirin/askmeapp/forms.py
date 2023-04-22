@@ -32,15 +32,21 @@ class RegistrationForm(forms.ModelForm):
 
         if password1 != password2:
             raise ValidationError("Passwords do not match", code='fail repeat')
+        return self.cleaned_data
+
+    def clean_username(self):
         try:
             models.User.objects.get(username=self.cleaned_data['username'])
         except:
-            try:
-                models.User.objects.get(email=self.cleaned_data['email'])
-            except:
-                return self.cleaned_data
-            raise ValidationError('Email already taken')
+            return self.cleaned_data['username']
         raise ValidationError('Username already taken')
+
+    def clean_email(self):
+        try:
+            models.User.objects.get(email=self.cleaned_data['email'])
+        except:
+            return self.cleaned_data['email']
+        raise ValidationError('Email already taken')
 
     def save(self):
         return models.User.objects.create_user(
