@@ -33,7 +33,7 @@ class Command(BaseCommand):
             new_questions = list()
             for j in range(1, 11):
                 new_question = models.Question(
-                    title=f'{(i - 1) * 10 + j} question title', content=f'this is a content for question number {(i - 1) * 10 + j}', user_id=ratio)
+                    title=f'{(i - 1) * 10 + j} question title', content=f'this is a content for question number {(i - 1) * 10 + j}', user_id=i)
                 new_questions.append(new_question)
             models.Question.objects.bulk_create(new_questions)
             for j in range(10):
@@ -49,7 +49,7 @@ class Command(BaseCommand):
             new_answers = list()
             for j in range(1, 101):
                 new_answer = models.Answer(content=f'content for answer number {j + (i - 1) * 100}', correct=not bool(
-                    j % 100), question=new_questions[(j - 1) % 10],  user_id=ratio)
+                    j % 100), question=new_questions[(j - 1) % 10],  user_id=i)
                 new_answers.append(new_answer)
             models.Answer.objects.bulk_create(new_answers)
 
