@@ -62,3 +62,34 @@ class ProfileRegistrationForm(forms.ModelForm):
         widgets = {
             'avatar': forms.ClearableFileInput(attrs={'id': 'choose-file'})
         }
+
+class SettingsForm(forms.ModelForm):
+    class Meta:
+        model = models.User
+        fields = ['username', 'email']
+        widgets = {
+            'username': forms.TextInput(
+                attrs={'class': 'col-7 login-field', 'placeholder': 'Username'}),
+            'email': forms.EmailInput(
+                attrs={'class': 'col-7 login-field', 'placeholder': 'Email'})
+        }
+
+    def clean_username(self):
+        try:
+            user = models.User.objects.get(
+                username=self.cleaned_data['username'])
+        except:
+            return self.cleaned_data['username']
+        if self.instance.id == user.id:
+            return self.cleaned_data['username']
+        raise ValidationError('Username already taken')
+
+    def clean_email(self):
+        # Проще было в модели делать CustomUser и сделать ключ unique
+        try:
+            user = models.User.objects.get(email=self.cleaned_data['email'])
+        except:
+            return self.cleaned_data['email']
+        if self.instance.id == user.id:
+            return self.cleaned_data['email']
+        raise ValidationError('Email already taken')

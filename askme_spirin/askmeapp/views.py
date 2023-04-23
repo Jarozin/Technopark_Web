@@ -4,7 +4,7 @@ from django.contrib import auth
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
-from askmeapp.forms import LoginForm, ProfileRegistrationForm, RegistrationForm
+from askmeapp.forms import LoginForm, ProfileRegistrationForm, RegistrationForm, SettingsForm
 from . import models
 from django.http import HttpResponseNotFound
 from django.core.paginator import Paginator
@@ -93,9 +93,23 @@ def signup(request):
 
 @login_required
 def settings(request):
+    if request.method == 'GET':
+        try:
+            settings_form = SettingsForm(instance=request.user)
+            profile = models.Profile.objects.get(user=request.user)
+            profile_form = ProfileRegistrationForm(instance=profile)
+        except:
+            return HttpResponseNotFound('Registration process went wrong')
+    elif request.method == 'POST':
+        settings_form = SettingsForm(request.POST, instance=request.user)
+        profile = models.Profile.objects.get(user=request.user)
+        profile_form = ProfileRegistrationForm(request.POST, request.FILES, instance=profile)
+        if settings_form.is_valid() and profile_form.is_valid():
+            settings_form.save()
+            profile_form.save()
     tags = models.Tag.objects.all()[:10]
     users = models.User.objects.all()[:10]
-    context = {'tags': tags, 'members': users}
+    context = {'tags': tags, 'members': users, 'form': settings_form, 'profile_form': profile_form}
     return render(request, 'settings.html', context)
 
 
