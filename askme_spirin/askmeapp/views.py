@@ -155,7 +155,7 @@ def question(request, question_id):
         if answer_form.is_valid():
             answer = answer_form.save()
             page_number = get_answer_page(question_answers, answer)
-            url = reverse('question', kwargs={'question_id':question_id}) + '?page=' + str(page_number)
+            url = reverse('question', kwargs={'question_id':question_id}) + '?page=' + str(page_number) + '#' + str(answer.id)
             return redirect(url)
     context = {'main_question': question,
                'items': answers,
