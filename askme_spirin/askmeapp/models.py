@@ -89,7 +89,7 @@ class AnswerManager(models.Manager):
 
     def get_question_answers(self, question):
         return question.answer_set.annotate(likes=Coalesce(Sum(Case(When(answerlike__state=True, then=Value(
-            1)), When(answerlike__state=False, then=Value(-1)))), 0)).order_by('-correct', '-likes')#, '-creation_date')
+            1)), When(answerlike__state=False, then=Value(-1)))), 0)).order_by('-correct', '-likes', '-creation_date')
 
 
 class Answer(models.Model):
