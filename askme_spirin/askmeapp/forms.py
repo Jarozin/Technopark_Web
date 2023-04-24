@@ -139,4 +139,5 @@ class AnswerForm(forms.ModelForm):
 
     def save(self):
         answer = models.Answer(content=self.cleaned_data['content'], user=self.instance.user, question=self.instance.question)
-        return answer.save()
+        answer.save()
+        return answer

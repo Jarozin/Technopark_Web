@@ -11,14 +11,26 @@ from django.core.paginator import Paginator
 # Create your views here.
 
 
+def get_answer_page(object_list, answer, per_page=3):
+    if (per_page <= 0):
+        per_page = 3
+    p = Paginator(object_list, per_page)
+    for page in p.page_range:
+        object = p.get_page(page)
+        print(answer)
+        print(object.object_list)
+        if answer in object.object_list:
+            return page
+    return 1
+
+
 def paginate(object_list, request, per_page=3):
-    if (per_page < 0):
+    if (per_page <= 0):
         per_page = 3
     p = Paginator(object_list, per_page)
     page = request.GET.get('page')
     object = p.get_page(page)
     return object
-
 
 def index(request):
     all_questions = models.Question.objects.get_new()
@@ -127,22 +139,24 @@ def question(request, question_id):
         return HttpResponseNotFound("Question doesnt exist")
     tags = models.Tag.objects.all()[:10]
     users = models.User.objects.all()[:10]
+    question_answers = models.Answer.objects.get_question_answers(question)
+    answers = paginate(question_answers, request)
     if request.method == 'GET':
         answer_form = AnswerForm()
     elif request.method == 'POST':
         #Потребовать авторизацию юзера
         if not request.user.is_authenticated:
-            url = reverse('login') + '?next=' + reverse('question', kwargs={'question_id':question_id})
+            url = reverse('login') + '?next=' + request.get_full_path()
             return redirect(url)
         #Тут может помереть(get)
         profile = models.Profile.objects.get(user=request.user)
         answer = models.Answer(user=profile, question_id=question_id)
         answer_form = AnswerForm(request.POST, instance=answer)
         if answer_form.is_valid():
-            answer_form.save()
-            return redirect(reverse('question', kwargs={'question_id':question_id}))
-    question_answers = models.Answer.objects.get_question_answers(question)
-    answers = paginate(question_answers, request, 3)
+            answer = answer_form.save()
+            page_number = get_answer_page(question_answers, answer)
+            url = reverse('question', kwargs={'question_id':question_id}) + '?page=' + str(page_number)
+            return redirect(url)
     context = {'main_question': question,
                'items': answers,
                'tags': tags, 'members': users, 'form': answer_form}
@@ -164,4 +178,7 @@ def tag(request, tag_name):
 @login_required
 def logout(request):
     auth.logout(request)
-    return redirect(reverse('login'))
+    url = request.GET.get('next', False)
+    if not url:
+        url = reverse('index')
+    return redirect(url)

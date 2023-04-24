@@ -7,7 +7,7 @@
       <div class="user-name">{{ user.username }}</div>
       <div>
         <a href="{% url "settings" %}" id="settings">settings</a>
-        <a href="{% url "logout" %}" id="logout">lot out</a>
+        <a href="{% url 'logout' %}?next={{ request.get_full_path }}" id="logout">lot out</a>
       </div>
     </div>
   </div>
