@@ -126,6 +126,7 @@ def settings(request):
         if settings_form.is_valid() and profile_form.is_valid():
             settings_form.save()
             profile_form.save()
+            return redirect(reverse('settings'))
     tags = models.Tag.objects.all()[:10]
     users = models.User.objects.all()[:10]
     context = {'tags': tags, 'members': users, 'form': settings_form, 'profile_form': profile_form}
