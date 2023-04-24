@@ -4,7 +4,7 @@ from django.contrib import auth
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
-from askmeapp.forms import LoginForm, ProfileRegistrationForm, QuestionForm, RegistrationForm, SettingsForm
+from askmeapp.forms import AnswerForm, LoginForm, ProfileRegistrationForm, QuestionForm, RegistrationForm, SettingsForm
 from . import models
 from django.http import HttpResponseNotFound
 from django.core.paginator import Paginator
@@ -127,11 +127,25 @@ def question(request, question_id):
         return HttpResponseNotFound("Question doesnt exist")
     tags = models.Tag.objects.all()[:10]
     users = models.User.objects.all()[:10]
+    if request.method == 'GET':
+        answer_form = AnswerForm()
+    elif request.method == 'POST':
+        #Потребовать авторизацию юзера
+        if not request.user.is_authenticated:
+            url = reverse('login') + '?next=' + reverse('question', kwargs={'question_id':question_id})
+            return redirect(url)
+        #Тут может помереть(get)
+        profile = models.Profile.objects.get(user=request.user)
+        answer = models.Answer(user=profile, question_id=question_id)
+        answer_form = AnswerForm(request.POST, instance=answer)
+        if answer_form.is_valid():
+            answer_form.save()
+            return redirect(reverse('question', kwargs={'question_id':question_id}))
     question_answers = models.Answer.objects.get_question_answers(question)
     answers = paginate(question_answers, request, 3)
     context = {'main_question': question,
                'items': answers,
-               'tags': tags, 'members': users}
+               'tags': tags, 'members': users, 'form': answer_form}
     return render(request, 'question.html', context)
 
 

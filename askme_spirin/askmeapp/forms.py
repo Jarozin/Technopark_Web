@@ -126,3 +126,17 @@ class SettingsForm(forms.ModelForm):
         if self.instance.id == user.id:
             return self.cleaned_data['email']
         raise ValidationError('Email already taken')
+
+
+class AnswerForm(forms.ModelForm):
+    class Meta:
+        model = models.Answer
+        fields = ['content']
+        widgets = {
+            'content': forms.Textarea(
+                attrs={'class': 'question-text-area col-10', 'placeholder': "Type your answer here", 'id': "add-answer-text-area"})
+        }
+
+    def save(self):
+        answer = models.Answer(content=self.cleaned_data['content'], user=self.instance.user, question=self.instance.question)
+        return answer.save()
