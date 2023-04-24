@@ -63,6 +63,39 @@ class ProfileRegistrationForm(forms.ModelForm):
             'avatar': forms.ClearableFileInput(attrs={'id': 'choose-file'})
         }
 
+
+class QuestionForm(forms.ModelForm):
+    tags = forms.CharField(max_length=255, widget=forms.TextInput(
+        attrs={'class': 'question-text-area', 'placeholder': 'tag1 tag2 tag3'}))
+
+    class Meta:
+        model = models.Question
+        fields = ['title', 'content']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'question-text-area', 'placeholder': 'Question title'}),
+            'content': forms.Textarea(attrs={'class': 'question-text-area col-10', 'id': 'content-area', 'placeholder': 'Contents of the question'})
+        }
+
+    def clean_tags(self):
+        model_tags = list()
+        sep_tags = self.cleaned_data['tags'].split()
+        for tag in sep_tags:
+            try:
+                model_tag = models.Tag.objects.get(name=tag)
+            except:
+                model_tag = models.Tag(name=tag)
+                model_tag.save()
+            model_tags.append(model_tag)
+        return model_tags
+
+    def save(self):
+        question = models.Question(
+            title=self.cleaned_data['title'], content=self.cleaned_data['content'], user=self.instance.user)
+        question.save()
+        question.tags.set(self.cleaned_data['tags'])
+        return question
+
+
 class SettingsForm(forms.ModelForm):
     class Meta:
         model = models.User

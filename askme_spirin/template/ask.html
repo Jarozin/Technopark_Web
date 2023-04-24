@@ -4,41 +4,25 @@
 <div class="row">
   <h1 class="header">New Question</h1>
   <div class="col error-message">
-    Title too long by 52 characters
+    {{ form.errors }}
   </div>
 </div>
-
 <div class="col-9">
-  <div class="row new-question">
-    <div class="col-2">
-      <div class="field-name">
-        Title
+  <form method="post" action="/ask/">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="row new-question">
+      <div class="col-2">
+        <div class="field-name">
+          {{ field.label }}
+        </div>
+      </div>
+      <div class="col-10">
+        {{ field }}
       </div>
     </div>
-    <div class="col-10">
-      <input class="question-text-area">
-    </div>
-  </div>
-  <div class="row new-question">
-    <div class="col-2">
-      <div class="field-name">
-        Content
-      </div>
-    </div>
-    <div class="col-10">
-      <textarea id="content-area" class="question-text-area col-10"></textarea>
-    </div>
-  </div>
-  <div class="row new-question">
-    <div class="col-2">
-      <div class="field-name">
-        Tags
-      </div>
-    </div>
-    <div class="col-10">
-      <input class="question-text-area">
-    </div>
-  </div>
-  <button id="ask-button" class="row search-button">Ask!</button>
+    {% endfor %}
+    <button type="submit" id="ask-button" class="row search-button">Ask!</button>
+  </form>
 </div>
 {% endblock content %}

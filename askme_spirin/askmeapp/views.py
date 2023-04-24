@@ -4,7 +4,7 @@ from django.contrib import auth
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
-from askmeapp.forms import LoginForm, ProfileRegistrationForm, RegistrationForm, SettingsForm
+from askmeapp.forms import LoginForm, ProfileRegistrationForm, QuestionForm, RegistrationForm, SettingsForm
 from . import models
 from django.http import HttpResponseNotFound
 from django.core.paginator import Paginator
@@ -67,8 +67,15 @@ def login(request):
 def ask(request):
     tags = models.Tag.objects.all()[:10]
     users = models.User.objects.all()[:10]
-
-    context = {'tags': tags, 'members': users}
+    if request.method == 'GET':
+        question_form = QuestionForm()
+    elif request.method == 'POST':
+        question = models.Question(user=models.Profile.objects.get(user=request.user))
+        question_form = QuestionForm(request.POST, instance=question)
+        if question_form.is_valid():
+            question = question_form.save()
+            return redirect(reverse('question', kwargs={'question_id':question.id}))
+    context = {'tags': tags, 'members': users, 'form': question_form}
     return render(request, 'ask.html', context)
 
 
