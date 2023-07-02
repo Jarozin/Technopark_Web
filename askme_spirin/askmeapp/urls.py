@@ -31,5 +31,6 @@ urlpatterns = [
     path('tag/<str:tag_name>/', views.tag, name="tag"),
     path('hot/', views.hot, name="hot"),
     path('logout/', views.logout, name='logout'),
+    path('vote/', views.vote, name='vote-view'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
 + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

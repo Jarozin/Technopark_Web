@@ -3,10 +3,12 @@ from django.shortcuts import redirect, render
 from django.contrib import auth
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_http_methods
+
 
 from askmeapp.forms import AnswerForm, LoginForm, ProfileRegistrationForm, QuestionForm, RegistrationForm, SettingsForm
 from . import models
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseNotFound, JsonResponse
 from django.core.paginator import Paginator
 # Create your views here.
 
@@ -204,3 +206,10 @@ def logout(request):
     if not url:
         url = reverse('index')
     return redirect(url)
+
+@login_required
+@require_http_methods(['POST'])
+def vote(request):
+    question_id = request.POST['question_id']
+    print(question_id)
+    return JsonResponse({'result_code': 0})
