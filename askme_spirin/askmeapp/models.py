@@ -77,7 +77,7 @@ class Question(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.PROTECT)
-    avatar = models.ImageField(upload_to='uploads/')
+    avatar = models.ImageField(default="default_avatar.jpg", upload_to='avatar/%Y/%m/%d')
 
     def __str__(self):
         return self.user.get_username()

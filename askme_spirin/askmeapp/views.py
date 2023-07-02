@@ -57,13 +57,17 @@ def hot(request):
 def login(request):
     tags = models.Tag.objects.all()[:10]
     users = models.User.objects.all()[:10]
+
     if request.method == 'GET':
         login_form = LoginForm()
+
     elif request.method == 'POST':
         login_form = LoginForm(request.POST)
+
         if login_form.is_valid():
             user = auth.authenticate(
                 request=request, **login_form.cleaned_data)
+
             if (user):
                 auth.login(request, user)
                 url = request.POST.get('next', False)
@@ -71,6 +75,7 @@ def login(request):
                     url = reverse('index')
                 return redirect(url)
             login_form.add_error(None, "Invalid username/password")
+
     context = {'tags': tags, 'members': users, 'form': login_form}
     return render(request, 'login.html', context)
 
@@ -79,14 +84,18 @@ def login(request):
 def ask(request):
     tags = models.Tag.objects.all()[:10]
     users = models.User.objects.all()[:10]
+
     if request.method == 'GET':
         question_form = QuestionForm()
+
     elif request.method == 'POST':
         question = models.Question(user=models.Profile.objects.get(user=request.user))
         question_form = QuestionForm(request.POST, instance=question)
+
         if question_form.is_valid():
             question = question_form.save()
             return redirect(reverse('question', kwargs={'question_id':question.id}))
+
     context = {'tags': tags, 'members': users, 'form': question_form}
     return render(request, 'ask.html', context)
 
@@ -94,18 +103,22 @@ def ask(request):
 def signup(request):
     tags = models.Tag.objects.all()[:10]
     users = models.User.objects.all()[:10]
+
     if request.method == 'GET':
         registration_form = RegistrationForm()
         profile_form = ProfileRegistrationForm()
+
     elif request.method == 'POST':
         registration_form = RegistrationForm(request.POST)
         profile_form = ProfileRegistrationForm(request.POST, request.FILES)
+
         if registration_form.is_valid() and profile_form.is_valid():
             user = registration_form.save()
             profile = models.Profile(user=user, avatar=profile_form.cleaned_data['avatar'])
             profile.save()
             auth.login(request, user)
             return redirect(reverse('index'))
+
     context = {'tags': tags, 'members': users, 'form': registration_form, 'profile_form': profile_form}
     return render(request, 'signup.html', context)
 
@@ -119,14 +132,17 @@ def settings(request):
             profile_form = ProfileRegistrationForm(instance=profile)
         except:
             return HttpResponseNotFound('Registration process went wrong')
+
     elif request.method == 'POST':
         settings_form = SettingsForm(request.POST, instance=request.user)
         profile = models.Profile.objects.get(user=request.user)
         profile_form = ProfileRegistrationForm(request.POST, request.FILES, instance=profile)
+
         if settings_form.is_valid() and profile_form.is_valid():
             settings_form.save()
             profile_form.save()
             return redirect(reverse('settings'))
+
     tags = models.Tag.objects.all()[:10]
     users = models.User.objects.all()[:10]
     context = {'tags': tags, 'members': users, 'form': settings_form, 'profile_form': profile_form}
@@ -142,22 +158,25 @@ def question(request, question_id):
     users = models.User.objects.all()[:10]
     question_answers = models.Answer.objects.get_question_answers(question)
     answers = paginate(question_answers, request)
+
     if request.method == 'GET':
         answer_form = AnswerForm()
+
     elif request.method == 'POST':
-        #Потребовать авторизацию юзера
         if not request.user.is_authenticated:
             url = reverse('login') + '?next=' + request.get_full_path()
             return redirect(url)
-        #Тут может помереть(get)
+
         profile = models.Profile.objects.get(user=request.user)
         answer = models.Answer(user=profile, question_id=question_id)
         answer_form = AnswerForm(request.POST, instance=answer)
+
         if answer_form.is_valid():
             answer = answer_form.save()
             page_number = get_answer_page(question_answers, answer)
             url = reverse('question', kwargs={'question_id':question_id}) + '?page=' + str(page_number) + '#' + str(answer.id)
             return redirect(url)
+
     context = {'main_question': question,
                'items': answers,
                'tags': tags, 'members': users, 'form': answer_form}
@@ -168,9 +187,11 @@ def tag(request, tag_name):
     tagged_questions = models.Question.objects.get_by_tag(tag_name)
     if (len(tagged_questions) == 0):
         return HttpResponseNotFound("No questions match the tag")
+
     questions = paginate(tagged_questions, request, 3)
     tags = models.Tag.objects.all()[:10]
     users = models.User.objects.all()[:10]
+
     context = {'tag': tag_name, 'items': questions,
                'members': users, 'tags': tags}
     return render(request, 'tag.html', context)
