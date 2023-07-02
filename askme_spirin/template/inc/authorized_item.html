@@ -1,7 +1,7 @@
 {% load static %}
 <div class="user">
     <div class="user-avatar">
-      <img class="my-avatar"  src="{{ request.user.profile.avatar.url }}">
+      <img class="my-avatar"  src="{{ user.profile.avatar.url }}">
     </div>
     <div id="user-settings">
       <div class="user-name">{{ user.username }}</div>
