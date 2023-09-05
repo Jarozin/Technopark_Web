@@ -21,10 +21,16 @@ class AnswerLike(models.Model):
         return str(self.user) + ': ' + like_state
 
 
+class QuestionLikeManager(models.Manager):
+    def get_likes_by_id(question_id):
+        return QuestionLike.objects.filter(question__pk=question_id).count()
+
+
 class QuestionLike(models.Model):
     question = models.ForeignKey('Question', on_delete=models.CASCADE)
     state = models.BooleanField()
     user = models.ForeignKey('Profile', on_delete=models.CASCADE)
+    objects = QuestionLikeManager()
 
     class Meta:
         unique_together = ['question', 'user']

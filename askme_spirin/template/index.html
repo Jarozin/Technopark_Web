@@ -49,7 +49,9 @@ const csrftoken = getCookie('csrftoken');
       }
     );
     fetch(request).then(function (response){
-      console.log(response);
+      const result = response.json().then(function (parsed) {
+        console.log(parsed.new_rating);
+      });
     })
   })
 </script>

@@ -211,5 +211,9 @@ def logout(request):
 @require_http_methods(['POST'])
 def vote(request):
     question_id = request.POST['question_id']
-    print(question_id)
-    return JsonResponse({'result_code': 0})
+    question = models.Question.objects.get(id=question_id)
+    like = models.QuestionLike.create(user=request.user.profile, question=question)
+    like.save()
+    new_rating = models.QuestionLike.objects.get_likes_by_id(question_id)
+    print(new_rating)
+    return JsonResponse({'new_rating': new_rating})
